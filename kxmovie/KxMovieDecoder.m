@@ -774,7 +774,16 @@ static int interrupt_callback(void *ctx);
         formatCtx = avformat_alloc_context();
         if (!formatCtx)
             return kxMovieErrorOpenFile;
-        
+        formatCtx->bit_rate = 1000 * 1024;
+        formatCtx->max_delay = 3000000;// 3 sec ,單位為微秒
+        formatCtx->duration = 3000000;
+        formatCtx->fps_probe_size = 3;
+        formatCtx -> max_picture_buffer = 440 * 240 * 3 * 24;
+        //  flag = TRUE;
+        formatCtx->max_analyze_duration2 = 0;
+        // ic->probesize2 = 2048;
+        formatCtx->max_chunk_size = 440 * 240;
+
         AVIOInterruptCB cb = {interrupt_callback, (__bridge void *)(self)};
         formatCtx->interrupt_callback = cb;
     }

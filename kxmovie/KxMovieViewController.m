@@ -67,8 +67,8 @@ static NSMutableDictionary * gHistory;
 
 #define LOCAL_MIN_BUFFERED_DURATION   0.2
 #define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 2.0
-#define NETWORK_MAX_BUFFERED_DURATION 4.0
+#define NETWORK_MIN_BUFFERED_DURATION 0.3
+#define NETWORK_MAX_BUFFERED_DURATION 1.4
 
 @interface KxMovieViewController () {
 
@@ -669,7 +669,7 @@ _messageLabel.hidden = YES;
             if (_maxBufferedDuration < _minBufferedDuration)
                 _maxBufferedDuration = _minBufferedDuration * 2;
         }
-        
+        NSLog(@"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
         LoggerStream(2, @"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
         
         if (self.isViewLoaded) {
