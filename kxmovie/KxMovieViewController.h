@@ -23,7 +23,7 @@ extern NSString * const KxMovieParameterDisableDeinterlacing;   // BOOL
                                parameters: (NSDictionary *) parameters;
 
 @property (readonly) BOOL playing;
-
+@property (nonatomic)BOOL isLiveView;
 - (void) play;
 - (void) pause;
 

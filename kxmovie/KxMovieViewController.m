@@ -227,7 +227,7 @@ static NSMutableDictionary * gHistory;
     _activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     
     [self.view addSubview:_activityIndicatorView];
-    
+
     CGFloat width = bounds.size.width;
     CGFloat height = bounds.size.height;
     
@@ -354,6 +354,11 @@ _messageLabel.hidden = YES;
         _progressSlider.hidden = YES;
         _leftLabel.hidden = YES;
         _infoButton.hidden = YES;
+    }
+    if (_isLiveView) {
+        _topHUD.hidden = YES;
+        _topBar.hidden = YES;
+        _bottomBar.hidden = YES;
     }
 }
 
