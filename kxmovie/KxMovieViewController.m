@@ -1360,8 +1360,8 @@ _messageLabel.hidden = YES;
 - (void) fullscreenMode: (BOOL) on
 {
     _fullscreen = on;
-    UIApplication *app = [UIApplication sharedApplication];
-    [app setStatusBarHidden:on withAnimation:UIStatusBarAnimationNone];
+//    UIApplication *app = [UIApplication sharedApplication];
+//    [app setStatusBarHidden:on withAnimation:UIStatusBarAnimationNone];
     // if (!self.presentingViewController) {
     //[self.navigationController setNavigationBarHidden:on animated:YES];
     //[self.tabBarController setTabBarHidden:on animated:YES];
