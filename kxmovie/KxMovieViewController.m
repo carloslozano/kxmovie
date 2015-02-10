@@ -567,6 +567,13 @@ _messageLabel.hidden = YES;
     LoggerStream(1, @"pause movie");
 }
 
+- (void) stop {
+    if (!self.playing) {
+        return;
+    }
+    _interrupted = YES;
+}
+
 - (void) setMoviePosition: (CGFloat) position
 {
     BOOL playMode = self.playing;
@@ -1536,6 +1543,7 @@ _messageLabel.hidden = YES;
 
 - (void) handleDecoderMovieError: (NSError *) error
 {
+    return;
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Failure", nil)
                                                         message:[error localizedDescription]
                                                        delegate:nil
