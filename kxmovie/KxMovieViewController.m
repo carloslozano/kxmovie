@@ -355,8 +355,9 @@ _messageLabel.hidden = YES;
     if (_isLiveView) {
         _topHUD.hidden = YES;
         _topBar.hidden = YES;
+        _bottomBar.hidden = YES;
     }
-    _bottomBar.hidden = YES;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -542,6 +543,7 @@ _messageLabel.hidden = YES;
 - (void) resume {
     [self setMoviePosition:_progressSlider.value * _decoder.duration];
     [self updatePlayButton];
+//    [_decoder resume];
 }
 
 - (void) pause
@@ -549,7 +551,7 @@ _messageLabel.hidden = YES;
     if (!self.playing)
         return;
     self.playing = NO;
-    //_interrupted = YES;
+//    _interrupted = YES;
     [self enableAudio:NO];
     [self updatePlayButton];
     LoggerStream(1, @"pause movie");
@@ -596,9 +598,13 @@ _messageLabel.hidden = YES;
 {
     if (self.playing)
         [self pause];
-    else
+    else {
+        [self resume];
         [self play];
+        [self setMoviePosition:_progressSlider.value * _decoder.duration];
+    }
 }
+
 
 - (void) forwardDidTouch: (id) sender
 {
@@ -612,6 +618,9 @@ _messageLabel.hidden = YES;
 
 - (void) progressDidChange: (id) sender
 {
+    if (!self.playing) {
+        return;
+    }
     NSAssert(_decoder.duration != MAXFLOAT, @"bugcheck");
     UISlider *slider = sender;
     [self setMoviePosition:slider.value * _decoder.duration];
