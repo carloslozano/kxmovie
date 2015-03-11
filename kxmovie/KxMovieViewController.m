@@ -509,7 +509,10 @@ _messageLabel.hidden = YES;
         
         return;
     }
-    
+    if (_decoder.isPause) {
+        [_decoder resume];
+        return;
+    }
     if (_interrupted)
         return;
 
