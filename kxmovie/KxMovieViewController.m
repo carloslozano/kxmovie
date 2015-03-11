@@ -550,7 +550,6 @@ _messageLabel.hidden = YES;
 
     if (_decoder.validAudio)
         [self enableAudio:YES];
-
     LoggerStream(1, @"play movie");
 }
 
@@ -563,6 +562,7 @@ _messageLabel.hidden = YES;
     //_interrupted = YES;
     [self enableAudio:NO];
     [self updatePlayButton];
+    [_decoder pause];
     LoggerStream(1, @"pause movie");
 }
 
@@ -607,8 +607,14 @@ _messageLabel.hidden = YES;
 {
     if (self.playing)
         [self pause];
-    else
+    else {
+        [self resume];
         [self play];
+    }
+}
+
+- (void)resume {
+    [_decoder resume];
 }
 
 - (void) forwardDidTouch: (id) sender
