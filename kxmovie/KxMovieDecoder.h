@@ -106,6 +106,7 @@ typedef BOOL(^KxMovieDecoderInterruptCallback)();
 @property (readonly, nonatomic) BOOL isNetwork;
 @property (readonly, nonatomic) CGFloat startTime;
 @property (readwrite, nonatomic) BOOL disableDeinterlacing;
+@property (nonatomic)BOOL isPause;
 - (void)pause;
 - (void)resume;
 @property (readwrite, nonatomic, strong) KxMovieDecoderInterruptCallback interruptCallback;

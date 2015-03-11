@@ -706,7 +706,14 @@ static int interrupt_callback(void *ctx);
     }
     return mp;
 }
-
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.isPause = NO;
+        
+    }
+    return self;
+}
 - (void) dealloc
 {
     LoggerStream(2, @"%@ dealloc", self);
@@ -1520,12 +1527,14 @@ static int interrupt_callback(void *ctx);
 - (void)pause {
     if (_formatCtx) {
         av_read_pause(_formatCtx);
+        self.isPause = YES;
     }
 }
 
 - (void)resume {
     if (_formatCtx) {
         av_read_play(_formatCtx);
+        self.isPause = NO;
     }
 }
 @end

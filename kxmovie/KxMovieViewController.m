@@ -526,7 +526,10 @@ _messageLabel.hidden = YES;
         
         return;
     }
-    
+    if (_decoder.isPause) {
+        [_decoder resume];
+        return;
+    }
     if (_interrupted)
         return;
 
@@ -608,13 +611,8 @@ _messageLabel.hidden = YES;
     if (self.playing)
         [self pause];
     else {
-        [self resume];
         [self play];
     }
-}
-
-- (void)resume {
-    [_decoder resume];
 }
 
 - (void) forwardDidTouch: (id) sender
