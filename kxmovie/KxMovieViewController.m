@@ -478,6 +478,7 @@ _messageLabel.hidden = YES;
 
 - (void) handleTap: (UITapGestureRecognizer *) sender
 {
+    return;
     if (sender.state == UIGestureRecognizerStateEnded) {
         
         if (sender == _tapGestureRecognizer) {
@@ -488,10 +489,10 @@ _messageLabel.hidden = YES;
                 
             UIView *frameView = [self frameView];
             
-            if (frameView.contentMode == UIViewContentModeScaleAspectFit)
-                frameView.contentMode = UIViewContentModeScaleAspectFill;
-            else
-                frameView.contentMode = UIViewContentModeScaleAspectFit;
+//            if (frameView.contentMode == UIViewContentModeScaleAspectFit)
+//                frameView.contentMode = UIViewContentModeScaleAspectFill;
+//            else
+//                frameView.contentMode = UIViewContentModeScaleAspectFit;
             
         }        
     }
