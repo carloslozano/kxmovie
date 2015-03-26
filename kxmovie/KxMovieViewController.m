@@ -267,7 +267,7 @@ _messageLabel.hidden = YES;
     _doneButton.backgroundColor = [UIColor clearColor];
 //    _doneButton.backgroundColor = [UIColor redColor];
     [_doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_doneButton setTitle:NSLocalizedString(@"OK", nil) forState:UIControlStateNormal];
+    [_doneButton setTitle:NSLocalizedString(@"off", nil) forState:UIControlStateNormal];
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:18];
     _doneButton.showsTouchWhenHighlighted = YES;
     [_doneButton addTarget:self action:@selector(doneDidTouch:)
@@ -300,7 +300,7 @@ _messageLabel.hidden = YES;
     _leftLabel.font = [UIFont systemFontOfSize:12];
     _leftLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     
-    _infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+    _infoButton = nil;// [UIButton buttonWithType:UIButtonTypeInfoDark];
     _infoButton.frame = CGRectMake(width-31, (topH-20)/2+1, 20, 20);
     _infoButton.showsTouchWhenHighlighted = YES;
     _infoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
@@ -357,8 +357,8 @@ _messageLabel.hidden = YES;
     if (_isLiveView) {
         _topHUD.hidden = YES;
         _topBar.hidden = YES;
-        _bottomBar.hidden = YES;
     }
+    _bottomBar.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -554,11 +554,15 @@ _messageLabel.hidden = YES;
     LoggerStream(1, @"play movie");
 }
 
+- (void) resume {
+    [self setMoviePosition:_progressSlider.value * _decoder.duration];
+    [self updatePlayButton];
+}
+
 - (void) pause
 {
     if (!self.playing)
         return;
-
     self.playing = NO;
     //_interrupted = YES;
     [self enableAudio:NO];
