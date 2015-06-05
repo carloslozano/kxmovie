@@ -202,8 +202,6 @@ static NSMutableDictionary * gHistory;
 {
     [self pause];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
     if (_dispatchQueue) {
         // Not needed as of ARC.
 //        dispatch_release(_dispatchQueue);
@@ -422,17 +420,10 @@ _messageLabel.hidden = YES;
 
         [_activityIndicatorView startAnimating];
     }
-   
-        
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillResignActive:)
-                                                 name:UIApplicationWillResignActiveNotification
-                                               object:[UIApplication sharedApplication]];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
-{    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+{
     
     [super viewWillDisappear:animated];
     
@@ -464,14 +455,6 @@ _messageLabel.hidden = YES;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
-
-- (void) applicationWillResignActive: (NSNotification *)notification
-{
-    [self showHUD:YES];
-    [self pause];
-    
-    LoggerStream(1, @"applicationWillResignActive");
 }
 
 #pragma mark - gesture recognizer
