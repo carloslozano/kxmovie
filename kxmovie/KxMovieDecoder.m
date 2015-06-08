@@ -1517,17 +1517,7 @@ static int interrupt_callback(void *ctx);
 
     return result;
 }
-- (void)pause {
-    if (_formatCtx) {
-        av_read_pause(_formatCtx);
-    }
-}
 
-- (void)resume {
-    if (_formatCtx) {
-        av_read_play(_formatCtx);
-    }
-}
 @end
 
 //////////////////////////////////////////////////////////////////////////////
