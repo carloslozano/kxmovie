@@ -600,9 +600,9 @@ _messageLabel.hidden = YES;
     }
 }
 
-- (void)resume {
-    [_decoder resume];
-}
+//- (void)resume {
+//    [_decoder resume];
+//}
 
 - (void) forwardDidTouch: (id) sender
 {
