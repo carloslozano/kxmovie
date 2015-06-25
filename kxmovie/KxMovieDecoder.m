@@ -794,7 +794,10 @@ static int interrupt_callback(void *ctx);
             avformat_free_context(formatCtx);
         return kxMovieErrorOpenFile;
     }
-    
+
+    formatCtx->flags |= AVFMT_FLAG_NOBUFFER;
+//    formatCtx->flags |= AVFMT_FLAG_IGNDTS;
+
     if (avformat_find_stream_info(formatCtx, NULL) < 0) {
         
         avformat_close_input(&formatCtx);
