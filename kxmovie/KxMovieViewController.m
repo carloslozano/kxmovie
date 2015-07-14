@@ -443,7 +443,7 @@ _messageLabel.hidden = YES;
     if (_fullscreen)
         [self fullscreenMode:NO];
         
-    [[UIApplication sharedApplication] setIdleTimerDisabled:_savedIdleTimer];
+//    [[UIApplication sharedApplication] setIdleTimerDisabled:_savedIdleTimer];
     
     [_activityIndicatorView stopAnimating];
     _buffered = NO;
@@ -1338,7 +1338,7 @@ _messageLabel.hidden = YES;
     _hiddenHUD = !show;    
     _panGestureRecognizer.enabled = _hiddenHUD;
         
-    [[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
+//    [[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
     
     [UIView animateWithDuration:0.2
                           delay:0.0
