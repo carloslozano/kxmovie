@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B224A191B62152A00F5B306 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A121B62152A00F5B306 /* libavcodec.a */; };
+		7B224A1A1B62152A00F5B306 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A131B62152A00F5B306 /* libavdevice.a */; };
+		7B224A1B1B62152A00F5B306 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A141B62152A00F5B306 /* libavfilter.a */; };
+		7B224A1C1B62152A00F5B306 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A151B62152A00F5B306 /* libavformat.a */; };
+		7B224A1D1B62152A00F5B306 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A161B62152A00F5B306 /* libavutil.a */; };
+		7B224A1E1B62152A00F5B306 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A171B62152A00F5B306 /* libswresample.a */; };
+		7B224A1F1B62152A00F5B306 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A181B62152A00F5B306 /* libswscale.a */; };
 		8704657C16F6ECA000D4083E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8704657A16F6EC9100D4083E /* libiconv.dylib */; };
 		87E793FD16390F6D000A0848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FC16390F6D000A0848 /* UIKit.framework */; };
 		87E793FF16390F6D000A0848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FE16390F6D000A0848 /* Foundation.framework */; };
@@ -66,6 +73,13 @@
 		49D953B9D2DC48FBB580C6AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E6AB9BC191288370010CAA1 /* kxmovie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kxmovie-Prefix.pch"; sourceTree = "<group>"; };
 		4E6AB9BD19128FDA0010CAA1 /* KxLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KxLogger.h; sourceTree = "<group>"; };
+		7B224A121B62152A00F5B306 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = "FFmpeg-iOS/lib/libavcodec.a"; sourceTree = "<group>"; };
+		7B224A131B62152A00F5B306 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = "FFmpeg-iOS/lib/libavdevice.a"; sourceTree = "<group>"; };
+		7B224A141B62152A00F5B306 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = "FFmpeg-iOS/lib/libavfilter.a"; sourceTree = "<group>"; };
+		7B224A151B62152A00F5B306 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = "FFmpeg-iOS/lib/libavformat.a"; sourceTree = "<group>"; };
+		7B224A161B62152A00F5B306 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = "FFmpeg-iOS/lib/libavutil.a"; sourceTree = "<group>"; };
+		7B224A171B62152A00F5B306 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = "FFmpeg-iOS/lib/libswresample.a"; sourceTree = "<group>"; };
+		7B224A181B62152A00F5B306 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = "FFmpeg-iOS/lib/libswscale.a"; sourceTree = "<group>"; };
 		8704657A16F6EC9100D4083E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		87E793F816390F6D000A0848 /* KxMovieExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KxMovieExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E793FC16390F6D000A0848 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -134,6 +148,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B224A191B62152A00F5B306 /* libavcodec.a in Frameworks */,
+				7B224A1A1B62152A00F5B306 /* libavdevice.a in Frameworks */,
+				7B224A1B1B62152A00F5B306 /* libavfilter.a in Frameworks */,
+				7B224A1C1B62152A00F5B306 /* libavformat.a in Frameworks */,
+				7B224A1D1B62152A00F5B306 /* libavutil.a in Frameworks */,
+				7B224A1E1B62152A00F5B306 /* libswresample.a in Frameworks */,
+				7B224A1F1B62152A00F5B306 /* libswscale.a in Frameworks */,
 				87FD6176163A75440090956E /* Foundation.framework in Frameworks */,
 				87FD618D163A75CF0090956E /* CoreGraphics.framework in Frameworks */,
 				87FD618E163A75D20090956E /* MediaPlayer.framework in Frameworks */,
@@ -171,6 +192,13 @@
 		87E793FB16390F6D000A0848 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7B224A121B62152A00F5B306 /* libavcodec.a */,
+				7B224A131B62152A00F5B306 /* libavdevice.a */,
+				7B224A141B62152A00F5B306 /* libavfilter.a */,
+				7B224A151B62152A00F5B306 /* libavformat.a */,
+				7B224A161B62152A00F5B306 /* libavutil.a */,
+				7B224A171B62152A00F5B306 /* libswresample.a */,
+				7B224A181B62152A00F5B306 /* libswscale.a */,
 				8704657A16F6EC9100D4083E /* libiconv.dylib */,
 				87E7944416391B9E000A0848 /* libavcodec.a */,
 				87E7944616391B9E000A0848 /* libavformat.a */,
@@ -511,10 +539,16 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/FFmpeg-iOS/include",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/libs/FFmpeg\"",
+					"$(PROJECT_DIR)/FFmpeg-iOS/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -546,10 +580,16 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/FFmpeg-iOS/include",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/libs/FFmpeg\"",
+					"$(PROJECT_DIR)/FFmpeg-iOS/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
