@@ -7,13 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7B224A191B62152A00F5B306 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A121B62152A00F5B306 /* libavcodec.a */; };
-		7B224A1A1B62152A00F5B306 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A131B62152A00F5B306 /* libavdevice.a */; };
-		7B224A1B1B62152A00F5B306 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A141B62152A00F5B306 /* libavfilter.a */; };
-		7B224A1C1B62152A00F5B306 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A151B62152A00F5B306 /* libavformat.a */; };
-		7B224A1D1B62152A00F5B306 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A161B62152A00F5B306 /* libavutil.a */; };
-		7B224A1E1B62152A00F5B306 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A171B62152A00F5B306 /* libswresample.a */; };
-		7B224A1F1B62152A00F5B306 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B224A181B62152A00F5B306 /* libswscale.a */; };
+		7BC051451B6B548000B7F793 /* KxAudioManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87E7946116394577000A0848 /* KxAudioManager.h */; };
+		7BC051461B6B548000B7F793 /* KxMovieDecoder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87E794201639107F000A0848 /* KxMovieDecoder.h */; };
+		7BC051471B6B548000B7F793 /* KxMovieGLView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87E794221639107F000A0848 /* KxMovieGLView.h */; };
+		7BC051481B6B548000B7F793 /* KxMovieViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87E794241639107F000A0848 /* KxMovieViewController.h */; };
+		7BC051491B6B564200B7F793 /* KxLogger.h in Sources */ = {isa = PBXBuildFile; fileRef = 4E6AB9BD19128FDA0010CAA1 /* KxLogger.h */; };
+		7BC0514A1B6B564200B7F793 /* kxmovie-Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = 4E6AB9BC191288370010CAA1 /* kxmovie-Prefix.pch */; };
+		7BC0518A1B6B60F700B7F793 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051831B6B60F700B7F793 /* libavcodec.a */; };
+		7BC0518B1B6B60F700B7F793 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051841B6B60F700B7F793 /* libavdevice.a */; };
+		7BC0518C1B6B60F700B7F793 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051851B6B60F700B7F793 /* libavfilter.a */; };
+		7BC0518D1B6B60F700B7F793 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051861B6B60F700B7F793 /* libavformat.a */; };
+		7BC0518E1B6B60F700B7F793 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051871B6B60F700B7F793 /* libavutil.a */; };
+		7BC0518F1B6B60F700B7F793 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051881B6B60F700B7F793 /* libswresample.a */; };
+		7BC051901B6B60F700B7F793 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051891B6B60F700B7F793 /* libswscale.a */; };
 		8704657C16F6ECA000D4083E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8704657A16F6EC9100D4083E /* libiconv.dylib */; };
 		87E793FD16390F6D000A0848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FC16390F6D000A0848 /* UIKit.framework */; };
 		87E793FF16390F6D000A0848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FE16390F6D000A0848 /* Foundation.framework */; };
@@ -60,9 +66,13 @@
 		87FD6173163A75440090956E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
+			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
+				7BC051451B6B548000B7F793 /* KxAudioManager.h in CopyFiles */,
+				7BC051461B6B548000B7F793 /* KxMovieDecoder.h in CopyFiles */,
+				7BC051471B6B548000B7F793 /* KxMovieGLView.h in CopyFiles */,
+				7BC051481B6B548000B7F793 /* KxMovieViewController.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +90,13 @@
 		7B224A161B62152A00F5B306 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = "FFmpeg-iOS/lib/libavutil.a"; sourceTree = "<group>"; };
 		7B224A171B62152A00F5B306 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = "FFmpeg-iOS/lib/libswresample.a"; sourceTree = "<group>"; };
 		7B224A181B62152A00F5B306 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = "FFmpeg-iOS/lib/libswscale.a"; sourceTree = "<group>"; };
+		7BC051831B6B60F700B7F793 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = "../FFmpeg-iOS/lib/libavcodec.a"; sourceTree = "<group>"; };
+		7BC051841B6B60F700B7F793 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = "../FFmpeg-iOS/lib/libavdevice.a"; sourceTree = "<group>"; };
+		7BC051851B6B60F700B7F793 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = "../FFmpeg-iOS/lib/libavfilter.a"; sourceTree = "<group>"; };
+		7BC051861B6B60F700B7F793 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = "../FFmpeg-iOS/lib/libavformat.a"; sourceTree = "<group>"; };
+		7BC051871B6B60F700B7F793 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = "../FFmpeg-iOS/lib/libavutil.a"; sourceTree = "<group>"; };
+		7BC051881B6B60F700B7F793 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = "../FFmpeg-iOS/lib/libswresample.a"; sourceTree = "<group>"; };
+		7BC051891B6B60F700B7F793 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = "../FFmpeg-iOS/lib/libswscale.a"; sourceTree = "<group>"; };
 		8704657A16F6EC9100D4083E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		87E793F816390F6D000A0848 /* KxMovieExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KxMovieExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E793FC16390F6D000A0848 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -148,13 +165,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B224A191B62152A00F5B306 /* libavcodec.a in Frameworks */,
-				7B224A1A1B62152A00F5B306 /* libavdevice.a in Frameworks */,
-				7B224A1B1B62152A00F5B306 /* libavfilter.a in Frameworks */,
-				7B224A1C1B62152A00F5B306 /* libavformat.a in Frameworks */,
-				7B224A1D1B62152A00F5B306 /* libavutil.a in Frameworks */,
-				7B224A1E1B62152A00F5B306 /* libswresample.a in Frameworks */,
-				7B224A1F1B62152A00F5B306 /* libswscale.a in Frameworks */,
+				7BC0518A1B6B60F700B7F793 /* libavcodec.a in Frameworks */,
+				7BC0518B1B6B60F700B7F793 /* libavdevice.a in Frameworks */,
+				7BC0518C1B6B60F700B7F793 /* libavfilter.a in Frameworks */,
+				7BC0518D1B6B60F700B7F793 /* libavformat.a in Frameworks */,
+				7BC0518E1B6B60F700B7F793 /* libavutil.a in Frameworks */,
+				7BC0518F1B6B60F700B7F793 /* libswresample.a in Frameworks */,
+				7BC051901B6B60F700B7F793 /* libswscale.a in Frameworks */,
 				87FD6176163A75440090956E /* Foundation.framework in Frameworks */,
 				87FD618D163A75CF0090956E /* CoreGraphics.framework in Frameworks */,
 				87FD618E163A75D20090956E /* MediaPlayer.framework in Frameworks */,
@@ -192,6 +209,13 @@
 		87E793FB16390F6D000A0848 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7BC051831B6B60F700B7F793 /* libavcodec.a */,
+				7BC051841B6B60F700B7F793 /* libavdevice.a */,
+				7BC051851B6B60F700B7F793 /* libavfilter.a */,
+				7BC051861B6B60F700B7F793 /* libavformat.a */,
+				7BC051871B6B60F700B7F793 /* libavutil.a */,
+				7BC051881B6B60F700B7F793 /* libswresample.a */,
+				7BC051891B6B60F700B7F793 /* libswscale.a */,
 				7B224A121B62152A00F5B306 /* libavcodec.a */,
 				7B224A131B62152A00F5B306 /* libavdevice.a */,
 				7B224A141B62152A00F5B306 /* libavfilter.a */,
@@ -399,6 +423,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BC051491B6B564200B7F793 /* KxLogger.h in Sources */,
+				7BC0514A1B6B564200B7F793 /* kxmovie-Prefix.pch in Sources */,
 				87FD6182163A75AF0090956E /* KxAudioManager.m in Sources */,
 				87FD6183163A75B10090956E /* KxMovieDecoder.m in Sources */,
 				87FD6184163A75B50090956E /* KxMovieGLView.m in Sources */,
@@ -517,45 +543,53 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/kxmovie.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-				);
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "kxmovie/kxmovie-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(PROJECT_DIR)/FFmpeg-iOS/include",
+					"$(PROJECT_DIR)/../FFmpeg-iOS/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/libs/FFmpeg\"",
-					"$(PROJECT_DIR)/FFmpeg-iOS/lib",
+					"$(PROJECT_DIR)/../FFmpeg-iOS/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = FFmpeg;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -565,37 +599,47 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/kxmovie.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-				);
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "kxmovie/kxmovie-Prefix.pch";
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(PROJECT_DIR)/FFmpeg-iOS/include",
+					"$(PROJECT_DIR)/../FFmpeg-iOS/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/libs/FFmpeg\"",
-					"$(PROJECT_DIR)/FFmpeg-iOS/lib",
+					"$(PROJECT_DIR)/../FFmpeg-iOS/lib",
 				);
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = FFmpeg;
+				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
