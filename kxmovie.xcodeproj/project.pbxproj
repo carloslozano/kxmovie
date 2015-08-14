@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		7B5F24851B78B1AB00252438 /* FNRTSPViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7B5F24831B78B19D00252438 /* FNRTSPViewController.h */; };
 		7BA7B9E01B7D83D600C00327 /* FNRTSPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F24821B78B19D00252438 /* FNRTSPViewController.m */; };
-		7BC051451B6B548000B7F793 /* KxAudioManager.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 87E7946116394577000A0848 /* KxAudioManager.h */; };
-		7BC051461B6B548000B7F793 /* KxMovieDecoder.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 87E794201639107F000A0848 /* KxMovieDecoder.h */; };
-		7BC051471B6B548000B7F793 /* KxMovieGLView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 87E794221639107F000A0848 /* KxMovieGLView.h */; };
-		7BC051481B6B548000B7F793 /* KxMovieViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 87E794241639107F000A0848 /* KxMovieViewController.h */; };
 		7BC051491B6B564200B7F793 /* KxLogger.h in Sources */ = {isa = PBXBuildFile; fileRef = 4E6AB9BD19128FDA0010CAA1 /* KxLogger.h */; };
 		7BC0514A1B6B564200B7F793 /* kxmovie-Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = 4E6AB9BC191288370010CAA1 /* kxmovie-Prefix.pch */; };
 		7BC0518A1B6B60F700B7F793 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051831B6B60F700B7F793 /* libavcodec.a */; };
@@ -59,14 +55,10 @@
 		87FD6173163A75440090956E /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = include;
-			dstSubfolderSpec = 16;
+			dstPath = "$(SRCROOT)/include";
+			dstSubfolderSpec = 0;
 			files = (
 				7B5F24851B78B1AB00252438 /* FNRTSPViewController.h in Copy Files */,
-				7BC051451B6B548000B7F793 /* KxAudioManager.h in Copy Files */,
-				7BC051461B6B548000B7F793 /* KxMovieDecoder.h in Copy Files */,
-				7BC051471B6B548000B7F793 /* KxMovieGLView.h in Copy Files */,
-				7BC051481B6B548000B7F793 /* KxMovieViewController.h in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
