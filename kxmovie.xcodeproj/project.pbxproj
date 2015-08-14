@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7B5F24851B78B1AB00252438 /* FNRTSPViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7B5F24831B78B19D00252438 /* FNRTSPViewController.h */; };
-		7BA7B9E01B7D83D600C00327 /* FNRTSPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F24821B78B19D00252438 /* FNRTSPViewController.m */; };
 		7BC051491B6B564200B7F793 /* KxLogger.h in Sources */ = {isa = PBXBuildFile; fileRef = 4E6AB9BD19128FDA0010CAA1 /* KxLogger.h */; };
 		7BC0514A1B6B564200B7F793 /* kxmovie-Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = 4E6AB9BC191288370010CAA1 /* kxmovie-Prefix.pch */; };
 		7BC0518A1B6B60F700B7F793 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051831B6B60F700B7F793 /* libavcodec.a */; };
@@ -404,7 +403,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BC051491B6B564200B7F793 /* KxLogger.h in Sources */,
-				7BA7B9E01B7D83D600C00327 /* FNRTSPViewController.m in Sources */,
 				7BC0514A1B6B564200B7F793 /* kxmovie-Prefix.pch in Sources */,
 				87FD6182163A75AF0090956E /* KxAudioManager.m in Sources */,
 				87FD6183163A75B10090956E /* KxMovieDecoder.m in Sources */,
