@@ -409,7 +409,6 @@ _messageLabel.hidden = YES;
     if (_infoMode)
         [self showInfoView:NO animated:NO];
     
-    _savedIdleTimer = [[UIApplication sharedApplication] isIdleTimerDisabled];
     
     [self showHUD: YES];
     
@@ -443,8 +442,7 @@ _messageLabel.hidden = YES;
     
     if (_fullscreen)
         [self fullscreenMode:NO];
-        
-//    [[UIApplication sharedApplication] setIdleTimerDisabled:_savedIdleTimer];
+
     
     [_activityIndicatorView stopAnimating];
     _buffered = NO;
