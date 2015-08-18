@@ -17,6 +17,10 @@
 		7BC0518E1B6B60F700B7F793 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051871B6B60F700B7F793 /* libavutil.a */; };
 		7BC0518F1B6B60F700B7F793 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051881B6B60F700B7F793 /* libswresample.a */; };
 		7BC051901B6B60F700B7F793 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051891B6B60F700B7F793 /* libswscale.a */; };
+		7BC6C6B41B7DCB7400F79EC9 /* KxAudioManager.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 87E7946116394577000A0848 /* KxAudioManager.h */; };
+		7BC6C6B51B7DCB7400F79EC9 /* KxMovieDecoder.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 87E794201639107F000A0848 /* KxMovieDecoder.h */; };
+		7BC6C6B61B7DCB7400F79EC9 /* KxMovieGLView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 87E794221639107F000A0848 /* KxMovieGLView.h */; };
+		7BC6C6B71B7DCB7400F79EC9 /* KxMovieViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 87E794241639107F000A0848 /* KxMovieViewController.h */; };
 		8704657C16F6ECA000D4083E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8704657A16F6EC9100D4083E /* libiconv.dylib */; };
 		87E793FD16390F6D000A0848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FC16390F6D000A0848 /* UIKit.framework */; };
 		87E793FF16390F6D000A0848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E793FE16390F6D000A0848 /* Foundation.framework */; };
@@ -57,6 +61,10 @@
 			dstPath = "$(SRCROOT)/include";
 			dstSubfolderSpec = 0;
 			files = (
+				7BC6C6B41B7DCB7400F79EC9 /* KxAudioManager.h in Copy Files */,
+				7BC6C6B51B7DCB7400F79EC9 /* KxMovieDecoder.h in Copy Files */,
+				7BC6C6B61B7DCB7400F79EC9 /* KxMovieGLView.h in Copy Files */,
+				7BC6C6B71B7DCB7400F79EC9 /* KxMovieViewController.h in Copy Files */,
 				7B5F24851B78B1AB00252438 /* FNRTSPViewController.h in Copy Files */,
 			);
 			name = "Copy Files";
