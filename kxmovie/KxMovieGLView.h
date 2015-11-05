@@ -20,5 +20,5 @@
              decoder: (KxMovieDecoder *) decoder;
 
 - (void) render: (KxVideoFrame *) frame;
-
+-(UIImage *) glToUIImage;
 @end

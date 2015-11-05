@@ -137,6 +137,10 @@ static NSMutableDictionary * gHistory;
 @property (readwrite) BOOL playing;
 @property (readwrite) BOOL decoding;
 @property (readwrite, strong) KxArtworkFrame *artworkFrame;
+/* capture function */
+@property (nonatomic)BOOL isCapture;
+@property (nonatomic, strong)NSTimer *captureTimer;
+
 @end
 
 @implementation KxMovieViewController
@@ -1199,7 +1203,21 @@ _messageLabel.hidden = YES;
     }
     
     _moviePosition = frame.position;
-        
+    
+    if (_isCapture) {
+        UIImage *image = [_glView glToUIImage];
+//        __strong typeof(frame)strongFrame = frame;
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+//            KxVideoFrameRGB *rgbFrame = (KxVideoFrameRGB *)strongFrame;
+//            UIImage *image = [rgbFrame asImage];
+        if (_captureComplete) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _captureComplete(image, nil);
+                self.captureComplete = nil;
+            });
+        }
+//        });
+    }
     return frame.duration;
 }
 
@@ -1750,6 +1768,33 @@ _messageLabel.hidden = YES;
             }
         }
     }
+}
+
+- (void)captureImageCompleteBlock:(CaptureComplete)captureComplete {
+    CGRect rect = _glView.layer.frame;
+    UIGraphicsBeginImageContextWithOptions(rect.size, _glView.opaque, 0.0);
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+    [_glView drawViewHierarchyInRect:rect afterScreenUpdates:YES];
+//    [_glView.layer renderInContext:context];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    if (captureComplete) {
+        captureComplete(img, nil);
+        return;
+    }
+    if (_isCapture) {
+        NSError *error = [NSError errorWithDomain:@"FNPlayer" code:-9999 userInfo:@{@"detial":@"capture active"}];
+        captureComplete(nil, error);
+        return;
+    }
+    _isCapture = YES;
+    self.captureTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(captureTimeOutAction) userInfo:nil repeats:NO];
+    self.captureComplete = captureComplete;
+}
+
+- (void)captureTimeOutAction {
+    _isCapture = NO;
+    self.captureComplete = nil;
 }
 
 @end

@@ -175,6 +175,8 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
 - (void) resolveUniforms: (GLuint) program;
 - (void) setFrame: (KxVideoFrame *) frame;
 - (BOOL) prepareRender;
+-(UIImage *) glToUIImage;
+
 @end
 
 @interface KxMovieGLRenderer_RGB : NSObject<KxMovieGLRenderer> {
@@ -204,7 +206,7 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
 - (void) setFrame: (KxVideoFrame *) frame
 {
     KxVideoFrameRGB *rgbFrame = (KxVideoFrameRGB *)frame;
-   
+
     assert(rgbFrame.rgb.length == rgbFrame.width * rgbFrame.height * 3);
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -339,6 +341,44 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
         glDeleteTextures(3, _textures);
 }
 
+-(UIImage *) glToUIImage {
+    
+    NSInteger myDataLength = 320 * 480 * 4;
+    
+    // allocate array and read pixels into it.
+    GLubyte *buffer = (GLubyte *) malloc(myDataLength);
+    glReadPixels(0, 0, 320, 480, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+    
+    // gl renders "upside down" so swap top to bottom into new array.
+    // there's gotta be a better way, but this works.
+    GLubyte *buffer2 = (GLubyte *) malloc(myDataLength);
+    for(int y = 0; y < 480; y++)
+    {
+        for(int x = 0; x < 320 * 4; x++)
+        {
+            buffer2[(479 - y) * 320 * 4 + x] = buffer[y * 4 * 320 + x];
+        }
+    }
+    
+    // make data provider with data.
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer2, myDataLength, NULL);
+    
+    // prep the ingredients
+    int bitsPerComponent = 8;
+    int bitsPerPixel = 32;
+    int bytesPerRow = 4 * 320;
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
+    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+    
+    // make the cgimage
+    CGImageRef imageRef = CGImageCreate(320, 480, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, NO, renderingIntent);
+    
+    // then make the uiimage from that
+    UIImage *myImage = [UIImage imageWithCGImage:imageRef];
+    return myImage;
+}
+
 @end
 
 //////////////////////////////////////////////////////////
@@ -349,6 +389,9 @@ enum {
 	ATTRIBUTE_VERTEX,
    	ATTRIBUTE_TEXCOORD,
 };
+@interface KxMovieGLView ()
+@property (nonatomic)BOOL isCapture;
+@end
 
 @implementation KxMovieGLView {
     
@@ -627,6 +670,9 @@ exit:
     
     glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
     [_context presentRenderbuffer:GL_RENDERBUFFER];
+}
+-(UIImage *) glToUIImage {
+    return [_renderer glToUIImage];
 }
 
 @end

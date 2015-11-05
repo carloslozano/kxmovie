@@ -17,6 +17,8 @@ extern NSString * const KxMovieParameterMinBufferedDuration;    // Float
 extern NSString * const KxMovieParameterMaxBufferedDuration;    // Float
 extern NSString * const KxMovieParameterDisableDeinterlacing;   // BOOL
 
+typedef void(^CaptureComplete)(UIImage *image, NSError *error);
+
 @interface KxMovieViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 + (id) movieViewControllerWithContentPath: (NSString *) path
@@ -27,5 +29,7 @@ extern NSString * const KxMovieParameterDisableDeinterlacing;   // BOOL
 - (void) play;
 - (void) pause;
 - (void) stop;
-
+// capture block
+@property (nonatomic, copy) CaptureComplete captureComplete;
+- (void)captureImageCompleteBlock:(CaptureComplete)captureComplete;
 @end
