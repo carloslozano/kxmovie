@@ -2220,54 +2220,13 @@ static void LoggerMessageAddCString(CFMutableDataRef data, const char *aString, 
 
 static void LoggerMessageAddString(CFMutableDataRef encoder, CFStringRef aString, int key)
 {
-	if (aString == NULL)
-		aString = CFSTR("");
-
-	// All strings are UTF-8 encoded
-	uint32_t partSize = 0;
-	uint8_t *bytes = NULL;
 	
-	CFIndex stringLength = CFStringGetLength(aString);
-	CFIndex bytesLength = stringLength * 4;
-	if (stringLength)
-	{
-		bytes = (uint8_t *)malloc((size_t)bytesLength + 4);
-		if (bytes != NULL)
-		{
-			CFStringGetBytes(aString, CFRangeMake(0, stringLength), kCFStringEncodingUTF8, '?', false, bytes, bytesLength, &bytesLength);
-			partSize = (uint32_t)bytesLength;
-		}
-	}
-
-	uint8_t *p = LoggerMessagePrepareForPart(encoder, 6 + partSize);
-	if (p != NULL)
-	{
-		*p++ = (uint8_t)key;
-		*p++ = (uint8_t)PART_TYPE_STRING;
-		*(uint32_t *)p = htonl(partSize);		// ARMv6 and later, x86 processors do just fine with unaligned accesses
-		if (partSize && bytes != NULL)
-			memcpy(p + 4, bytes, (size_t)partSize);
-	}
-
-	if (bytes != NULL)
-		free(bytes);
+		
 }
 
 static void LoggerMessageAddData(CFMutableDataRef encoder, CFDataRef theData, int key, int partType)
 {
-	if (theData != NULL)
-	{
-		CFIndex dataLength = CFDataGetLength(theData);
-		uint8_t *p = LoggerMessagePrepareForPart(encoder, (uint32_t)dataLength + 6);
-		if (p != NULL)
-		{
-			*p++ = (uint8_t)key;
-			*p++ = (uint8_t)partType;
-			*((uint32_t *)p) = htonl(dataLength);	// ARMv6 and later, x86 processors do just fine with unaligned accesses
-			if (dataLength)
-				memcpy(p + 4, CFDataGetBytePtr(theData), (size_t)dataLength);
-		}
-	}
+	
 }
 
 static uint32_t LoggerMessageGetSeq(CFDataRef message)

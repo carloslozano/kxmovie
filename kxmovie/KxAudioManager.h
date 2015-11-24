@@ -11,6 +11,7 @@
 
 
 #import <CoreFoundation/CoreFoundation.h>
+#import <AVFoundation/AVFoundation.h>
 
 typedef void (^KxAudioManagerOutputBlock)(float *data, UInt32 numFrames, UInt32 numChannels);
 
@@ -22,6 +23,7 @@ typedef void (^KxAudioManagerOutputBlock)(float *data, UInt32 numFrames, UInt32 
 @property (readonly) Float32            outputVolume;
 @property (readonly) BOOL               playing;
 @property (readonly, strong) NSString   *audioRoute;
+@property (readonly) AVAudioSession     *audioSession;
 
 @property (readwrite, copy) KxAudioManagerOutputBlock outputBlock;
 

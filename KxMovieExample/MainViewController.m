@@ -29,22 +29,20 @@
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFeatured tag: 0];
         
         _remoteMovies = @[
+                          
+                          @"http://192.168.1.36:1497/%/5CC8D1120A798069DD06B438CCBED2BF/TV%20On%20The%20Radio%20-%20Happy%20Idiot%20(Official)-OaKVy-FlaUA.mp4",
+                          @"http://192.168.1.36:1497/%/B1C09CAF965C20791DE8C3B866173DCA/bbb_sunflower_1080p_30fps_normal.mp4",
+                          @"http://192.168.1.36:1497/%/3B96A729C8DA7C07EDD07D14B5F35ADE/bbb_sunflower_1080p_60fps_normal.mp4",
+                          @"http://192.168.1.36:1497/%/69A8454FC52B1EA11137FC91E330DC1E/big_buck_bunny_1080p_h264.mov",
+                          @"http://192.168.1.36:1497/%/66B7AE239A8CDD5D4EA4E2F833A20A22/big_buck_bunny_1080p_stereo.ogg",
+                          @"http://192.168.1.36:1497/%/F1F2D12F359097689977BB05D99A8360/big_buck_bunny_1080p_surround.avi",
+                          @"http://192.168.1.36:1497/%/B67E3F5EA43F5E6D8AA948D3BEEF2381/BigBuckBunny-DivXPlusHD.mkv",
+                          @"http://192.168.1.36:1497/%/31987D264478245C38A7C9C1CEDC5B1A/ElephantsDream-DivXPlusHD.mkv",
+                          @"http://192.168.1.36:1497/%/897B0E54E236685DEBB504B81A9DB2F3/Sintel.2010.720p.mkv",
+                          @"http://192.168.1.36:1497/%/DD19F7F042525558AD20CBD6A5633FF5/Sintel.2010.1080p.mkv",
+                          @"http://192.168.1.36:1497/%/4EB8E60A5E5C1807A1E17A7B16CF8A9E/Sintel_DivXPlusHD_2Titles_6500kbps.mkv"
+                          ];
 
-//            @"http://eric.cast.ro/stream2.flv",
-//            @"http://liveipad.wasu.cn/cctv2_ipad/z.m3u8",
-            @"http://www.wowza.com/_h264/BigBuckBunny_175k.mov",
-            // @"http://www.wowza.com/_h264/BigBuckBunny_115k.mov",
-            @"rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov",
-            @"http://santai.tv/vod/test/test_format_1.3gp",
-            @"http://santai.tv/vod/test/test_format_1.mp4",
-        
-            //@"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov",
-            //@"http://santai.tv/vod/test/BigBuckBunny_175k.mov",
-        
-//            @"rtmp://aragontvlivefs.fplive.net/aragontvlive-live/stream_normal_abt",
-//            @"rtmp://ucaster.eu:1935/live/_definst_/discoverylacajatv",
-//            @"rtmp://edge01.fms.dutchview.nl/botr/bunny.flv"
-        ];
         
     }
     return self;
@@ -70,9 +68,6 @@
 {
     [super viewDidLoad];
 
-#ifdef DEBUG_AUTOPLAY
-    [self performSelector:@selector(launchDebugTest) withObject:nil afterDelay:0.5];
-#endif
 }
 
 - (void)launchDebugTest
@@ -150,9 +145,10 @@
     // Add all the movies present in the app bundle.
     NSBundle *bundle = [NSBundle mainBundle];
     [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"mp4" inDirectory:@"SampleMovies"]];
-    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"mov" inDirectory:@"SampleMovies"]];
+    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"ogv" inDirectory:@"SampleMovies"]];
     [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"m4v" inDirectory:@"SampleMovies"]];
-    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"wav" inDirectory:@"SampleMovies"]];
+    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"mkv" inDirectory:@"SampleMovies"]];
+    [ma addObjectsFromArray:[bundle pathsForResourcesOfType:@"divx" inDirectory:@"SampleMovies"]];
 
     [ma sortedArrayUsingSelector:@selector(compare:)];
     
@@ -228,16 +224,15 @@
     }
     
     // increase buffering for .wmv, it solves problem with delaying audio frames
-    if ([path.pathExtension isEqualToString:@"wmv"])
-        parameters[KxMovieParameterMinBufferedDuration] = @(5.0);
-    
+        
     // disable deinterlacing for iPhone, because it's complex operation can cause stuttering
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        parameters[KxMovieParameterDisableDeinterlacing] = @(YES);
+    //if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    //
+    parameters[KxMovieParameterDisableDeinterlacing] = @(YES);
     
     // disable buffering
-    //parameters[KxMovieParameterMinBufferedDuration] = @(0.0f);
-    //parameters[KxMovieParameterMaxBufferedDuration] = @(0.0f);
+    parameters[KxMovieParameterMinBufferedDuration] = @(1.0);
+    parameters[KxMovieParameterMaxBufferedDuration] = @(2.0);
     
     KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path
                                                                                parameters:parameters];

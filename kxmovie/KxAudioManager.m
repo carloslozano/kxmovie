@@ -18,11 +18,13 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <Accelerate/Accelerate.h>
 #import "KxLogger.h"
+#import <AVFoundation/AVFoundation.h>
 
-#define MAX_FRAME_SIZE 4096
-#define MAX_CHAN       2
 
-#define MAX_SAMPLE_DUMPED 5
+
+#define MAX_FRAME_SIZE 1024*64
+#define MAX_CHAN       5
+
 
 static BOOL checkError(OSStatus error, const char *operation);
 static void sessionPropertyListener(void *inClientData, AudioSessionPropertyID inID, UInt32 inDataSize, const void *inData);
@@ -34,6 +36,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
     
     BOOL                        _initialized;
     BOOL                        _activated;
+    AVAudioSession              *_audioSession;
     float                       *_outData;
     AudioUnit                   _audioUnit;
     AudioStreamBasicDescription _outputFormat;
@@ -100,41 +103,13 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 
 #pragma mark - private
 
-// Debug: dump the current frame data. Limited to 20 samples.
-
-#define dumpAudioSamples(prefix, dataBuffer, samplePrintFormat, sampleCount, channelCount) \
-{ \
-    NSMutableString *dump = [NSMutableString stringWithFormat:prefix]; \
-    for (int i = 0; i < MIN(MAX_SAMPLE_DUMPED, sampleCount); i++) \
-    { \
-        for (int j = 0; j < channelCount; j++) \
-        { \
-            [dump appendFormat:samplePrintFormat, dataBuffer[j + i * channelCount]]; \
-        } \
-        [dump appendFormat:@"\n"]; \
-    } \
-    LoggerAudio(3, @"%@", dump); \
-}
-
-#define dumpAudioSamplesNonInterleaved(prefix, dataBuffer, samplePrintFormat, sampleCount, channelCount) \
-{ \
-    NSMutableString *dump = [NSMutableString stringWithFormat:prefix]; \
-    for (int i = 0; i < MIN(MAX_SAMPLE_DUMPED, sampleCount); i++) \
-    { \
-        for (int j = 0; j < channelCount; j++) \
-        { \
-            [dump appendFormat:samplePrintFormat, dataBuffer[j][i]]; \
-        } \
-        [dump appendFormat:@"\n"]; \
-    } \
-    LoggerAudio(3, @"%@", dump); \
-}
-
 - (BOOL) checkAudioRoute
 {
     // Check what the audio route is.
     UInt32 propertySize = sizeof(CFStringRef);
     CFStringRef route;
+    _audioSession = [AVAudioSession sharedInstance];
+    
     if (checkError(AudioSessionGetProperty(kAudioSessionProperty_AudioRoute,
                                            &propertySize,
                                            &route),
@@ -142,7 +117,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
         return NO;
     
     _audioRoute = CFBridgingRelease(route);
-    LoggerAudio(1, @"AudioRoute: %@", _audioRoute);
+    ////LoggerStream(1, @"AudioRoute: %@", _audioRoute);
     return YES;
 }
 
@@ -178,8 +153,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
     // Set the buffer size, this will affect the number of samples that get rendered every time the audio callback is fired
     // A small number will get you lower latency audio, but will make your processor work harder
     
-#if !TARGET_IPHONE_SIMULATOR
-    Float32 preferredBufferSize = 0.0232;
+    Float32 preferredBufferSize = 5.0;
     if (checkError(AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration,
                                             sizeof(preferredBufferSize),
                                             &preferredBufferSize),
@@ -187,8 +161,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
         
         // just warning
     }
-#endif
-        
+    
     if (checkError(AudioSessionSetActive(YES),
                    "Couldn't activate the audio session"))
         return NO;
@@ -239,8 +212,8 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
     _numBytesPerSample = _outputFormat.mBitsPerChannel / 8;
     _numOutputChannels = _outputFormat.mChannelsPerFrame;
     
-    LoggerAudio(2, @"Current output bytes per sample: %ld", _numBytesPerSample);
-    LoggerAudio(2, @"Current output num channels: %ld", _numOutputChannels);
+    ////LoggerStream(2, @"Current output bytes per sample: %ld", _numBytesPerSample);
+    ////LoggerStream(2, @"Current output num channels: %ld", _numOutputChannels);
             
     // Slap a render callback on the unit
     AURenderCallbackStruct callbackStruct;
@@ -276,7 +249,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
                    "Checking number of output channels"))
         return NO;
     
-    LoggerAudio(2, @"We've got %lu output channels", newNumChannels);
+    ////LoggerStream(2, @"We've got %lu output channels", newNumChannels);
     
     // Get the hardware sampling rate. This is settable, but here we're only reading.
     size = sizeof(_samplingRate);
@@ -287,7 +260,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
         
         return NO;
     
-    LoggerAudio(2, @"Current sampling rate: %f", _samplingRate);
+    ////LoggerStream(2, @"Current sampling rate: %f", _samplingRate);
     
     size = sizeof(_outputVolume);
     if (checkError(AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareOutputVolume,
@@ -296,7 +269,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
                    "Checking current hardware output volume"))
         return NO;
     
-    LoggerAudio(1, @"Current output volume: %f", _outputVolume);
+    ////LoggerStream(1, @"Current output volume: %f", _outputVolume);
     
     return YES;	
 }
@@ -335,10 +308,6 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
             float scale = (float)INT16_MAX;
             vDSP_vsmul(_outData, 1, &scale, _outData, 1, numFrames*_numOutputChannels);
             
-#ifdef DUMP_AUDIO_DATA
-            LoggerAudio(2, @"Buffer %u - Output Channels %u - Samples %u",
-                          (uint)ioData->mNumberBuffers, (uint)ioData->mBuffers[0].mNumberChannels, (uint)numFrames);
-#endif
 
             for (int iBuffer=0; iBuffer < ioData->mNumberBuffers; ++iBuffer) {
                 
@@ -347,11 +316,6 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
                 for (int iChannel = 0; iChannel < thisNumChannels; ++iChannel) {
                     vDSP_vfix16(_outData+iChannel, _numOutputChannels, (SInt16 *)ioData->mBuffers[iBuffer].mData+iChannel, thisNumChannels, numFrames);
                 }
-#ifdef DUMP_AUDIO_DATA
-                dumpAudioSamples(@"Audio frames decoded by FFmpeg and reformatted:\n",
-                                 ((SInt16 *)ioData->mBuffers[iBuffer].mData),
-                                 @"% 8d ", numFrames, thisNumChannels);
-#endif
             }
             
         }        
@@ -368,10 +332,11 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
         
         if (!_initialized) {
             
-            if (checkError(AudioSessionInitialize(NULL,
-                                                  kCFRunLoopDefaultMode,
-                                                  sessionInterruptionListener,
-                                                  (__bridge void *)(self)),
+            _audioSession = [AVAudioSession sharedInstance];
+            NSError *error;
+            [[AVAudioSession sharedInstance] setActive:TRUE error: &error];
+            
+            if (checkError(error,
                            "Couldn't initialize audio session"))
                 return NO;
             
@@ -484,13 +449,13 @@ static void sessionInterruptionListener(void *inClientData, UInt32 inInterruptio
     
 	if (inInterruption == kAudioSessionBeginInterruption) {
         
-		LoggerAudio(2, @"Begin interuption");
+		////LoggerStream(2, @"Begin interuption");
         sm.playAfterSessionEndInterruption = sm.playing;
         [sm pause];
                 
 	} else if (inInterruption == kAudioSessionEndInterruption) {
 		
-        LoggerAudio(2, @"End interuption");
+        ////LoggerStream(2, @"End interuption");
         if (sm.playAfterSessionEndInterruption) {
             sm.playAfterSessionEndInterruption = NO;
             [sm play];

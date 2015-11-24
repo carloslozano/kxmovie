@@ -13,8 +13,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 #import <OpenGLES/EAGL.h>
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
+#import <OpenGLES/ES3/gl.h>
+#import <OpenGLES/ES3/glext.h>
 #import "KxMovieDecoder.h"
 #import "KxLogger.h"
 
@@ -393,10 +393,10 @@ enum {
         eaglLayer.opaque = YES;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
-                                        kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
+                                        kEAGLColorFormatRGB565, kEAGLDrawablePropertyColorFormat,
                                         nil];
         
-        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
         
         if (!_context ||
             ![EAGLContext setCurrentContext:_context]) {
@@ -406,14 +406,30 @@ enum {
             return nil;
         }
         
-        glGenFramebuffers(1, &_framebuffer);
+        glEnable(GL_TEXTURE_BINDING_2D);
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_RENDERBUFFER);
+        glEnable(GL_FRAMEBUFFER);
+        
         glGenRenderbuffers(1, &_renderbuffer);
-        glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
         [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];
+        
+        
+        glGenFramebuffers(1, &_framebuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+        
         glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
         glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderbuffer);
+        
+        glDisable(GL_DITHER);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        
+        glViewport(0, 0, frame.size.width, frame.size.height);
+        glScissor(0, 0, frame.size.width, frame.size.height);
+    
         
         GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
         if (status != GL_FRAMEBUFFER_COMPLETE) {

@@ -65,10 +65,10 @@ enum {
 
 static NSMutableDictionary * gHistory;
 
-#define LOCAL_MIN_BUFFERED_DURATION   0.2
-#define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 0.3
-#define NETWORK_MAX_BUFFERED_DURATION 1.4
+#define LOCAL_MIN_BUFFERED_DURATION   0.25
+#define LOCAL_MAX_BUFFERED_DURATION   0.5
+#define NETWORK_MIN_BUFFERED_DURATION 1.0
+#define NETWORK_MAX_BUFFERED_DURATION 2.0
 
 @interface KxMovieViewController () {
 
@@ -210,12 +210,12 @@ static NSMutableDictionary * gHistory;
         _dispatchQueue = NULL;
     }
     
-    LoggerStream(1, @"%@ dealloc", self);
+    ////LoggerStream(1, @"%@ dealloc", self);
 }
 
 - (void)loadView
 {
-    // LoggerStream(1, @"loadView");
+    // ////LoggerStream(1, @"loadView");
     CGRect bounds = [[UIScreen mainScreen] applicationFrame];
     
     self.view = [[UIView alloc] initWithFrame:bounds];
@@ -234,7 +234,7 @@ static NSMutableDictionary * gHistory;
     _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,40,width-40,40)];
     _messageLabel.backgroundColor = [UIColor clearColor];
     _messageLabel.textColor = [UIColor redColor];
-_messageLabel.hidden = YES;
+    _messageLabel.hidden = NO;
     _messageLabel.font = [UIFont systemFontOfSize:14];
     _messageLabel.numberOfLines = 2;
     _messageLabel.textAlignment = NSTextAlignmentCenter;
@@ -375,7 +375,7 @@ _messageLabel.hidden = YES;
             _minBufferedDuration = _maxBufferedDuration = 0;
             [self play];
             
-            LoggerStream(0, @"didReceiveMemoryWarning, disable buffering and continue playing");
+            ////LoggerStream(0, @"didReceiveMemoryWarning, disable buffering and continue playing");
             
         } else {
             
@@ -400,7 +400,7 @@ _messageLabel.hidden = YES;
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    // LoggerStream(1, @"viewDidAppear");
+    // ////LoggerStream(1, @"viewDidAppear");
     
     [super viewDidAppear:animated];
         
@@ -458,7 +458,7 @@ _messageLabel.hidden = YES;
     _buffered = NO;
     _interrupted = YES;
     
-    LoggerStream(1, @"viewWillDisappear %@", self);
+    ////LoggerStream(1, @"viewWillDisappear %@", self);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -471,14 +471,14 @@ _messageLabel.hidden = YES;
     [self showHUD:YES];
     [self pause];
     
-    LoggerStream(1, @"applicationWillResignActive");
+    ////LoggerStream(1, @"applicationWillResignActive");
 }
 
 #pragma mark - gesture recognizer
 
 - (void) handleTap: (UITapGestureRecognizer *) sender
 {
-    return;
+    
     if (sender.state == UIGestureRecognizerStateEnded) {
         
         if (sender == _tapGestureRecognizer) {
@@ -489,10 +489,10 @@ _messageLabel.hidden = YES;
                 
             UIView *frameView = [self frameView];
             
-//            if (frameView.contentMode == UIViewContentModeScaleAspectFit)
-//                frameView.contentMode = UIViewContentModeScaleAspectFill;
-//            else
-//                frameView.contentMode = UIViewContentModeScaleAspectFit;
+            if (frameView.contentMode == UIViewContentModeScaleAspectFit)
+                frameView.contentMode = UIViewContentModeScaleAspectFill;
+            else
+                frameView.contentMode = UIViewContentModeScaleAspectFit;
             
         }        
     }
@@ -511,7 +511,7 @@ _messageLabel.hidden = YES;
             const CGFloat ff = pt.x > 0 ? 1.0 : -1.0;            
             [self setMoviePosition: _moviePosition + ff * MIN(sc, 600.0)];
         }
-        //LoggerStream(2, @"pan %.2f %.2f %.2f sec", pt.x, vt.x, sc);
+        //////LoggerStream(2, @"pan %.2f %.2f %.2f sec", pt.x, vt.x, sc);
     }
 }
 
@@ -552,7 +552,7 @@ _messageLabel.hidden = YES;
     if (_decoder.validAudio)
         [self enableAudio:YES];
 
-    LoggerStream(1, @"play movie");
+    ////LoggerStream(1, @"play movie");
 }
 
 - (void) pause
@@ -561,10 +561,10 @@ _messageLabel.hidden = YES;
         return;
 
     self.playing = NO;
-    //_interrupted = YES;
+    _interrupted = YES;
     [self enableAudio:NO];
     [self updatePlayButton];
-    LoggerStream(1, @"pause movie");
+    ////LoggerStream(1, @"pause movie");
 }
 
 - (void) stop {
@@ -634,7 +634,7 @@ _messageLabel.hidden = YES;
 - (void) setMovieDecoder: (KxMovieDecoder *) decoder
                withError: (NSError *) error
 {
-    LoggerStream(2, @"setMovieDecoder");
+    //////LoggerStream(2, @"setMovieDecoder");
             
     if (!error && decoder) {
         
@@ -682,7 +682,7 @@ _messageLabel.hidden = YES;
                 _maxBufferedDuration = _minBufferedDuration * 2;
         }
         NSLog(@"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
-        LoggerStream(2, @"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
+        //////LoggerStream(2, @"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
         
         if (self.isViewLoaded) {
             
@@ -851,7 +851,7 @@ _messageLabel.hidden = YES;
                         KxAudioFrame *frame = _audioFrames[0];
 
 #ifdef DUMP_AUDIO_DATA
-                        LoggerAudio(2, @"Audio frame position: %f", frame.position);
+                        ////LoggerAudio(2, @"Audio frame position: %f", frame.position);
 #endif
                         if (_decoder.validVideo) {
                         
@@ -861,7 +861,7 @@ _messageLabel.hidden = YES;
                                 
                                 memset(outData, 0, numFrames * numChannels * sizeof(float));
 #ifdef DEBUG
-                                LoggerStream(0, @"desync audio (outrun) wait %.4f %.4f", _moviePosition, frame.position);
+                                ////LoggerStream(0, @"desync audio (outrun) wait %.4f %.4f", _moviePosition, frame.position);
                                 _debugAudioStatus = 1;
                                 _debugAudioStatusTS = [NSDate date];
 #endif
@@ -873,7 +873,7 @@ _messageLabel.hidden = YES;
                             if (delta > 0.1 && count > 1) {
                                 
 #ifdef DEBUG
-                                LoggerStream(0, @"desync audio (lags) skip %.4f %.4f", _moviePosition, frame.position);
+                                ////LoggerStream(0, @"desync audio (lags) skip %.4f %.4f", _moviePosition, frame.position);
                                 _debugAudioStatus = 2;
                                 _debugAudioStatusTS = [NSDate date];
 #endif
@@ -913,7 +913,7 @@ _messageLabel.hidden = YES;
             } else {
                 
                 memset(outData, 0, numFrames * numChannels * sizeof(float));
-                //LoggerStream(1, @"silence audio");
+                //////LoggerStream(1, @"silence audio");
 #ifdef DEBUG
                 _debugAudioStatus = 3;
                 _debugAudioStatusTS = [NSDate date];
@@ -937,10 +937,6 @@ _messageLabel.hidden = YES;
         
         [audioManager play];
         
-        LoggerAudio(2, @"audio device smr: %d fmt: %d chn: %d",
-                    (int)audioManager.samplingRate,
-                    (int)audioManager.numBytesPerSample,
-                    (int)audioManager.numOutputChannels);
         
     } else {
         
@@ -1136,11 +1132,11 @@ _messageLabel.hidden = YES;
     NSTimeInterval correction = dPosition - dTime;
     
     //if ((_tickCounter % 200) == 0)
-    //    LoggerStream(1, @"tick correction %.4f", correction);
+    //    ////LoggerStream(1, @"tick correction %.4f", correction);
     
     if (correction > 1.f || correction < -1.f) {
         
-        LoggerStream(1, @"tick correction reset %.2f", correction);
+        ////LoggerStream(1, @"tick correction reset %.2f", correction);
         correction = 0;
         _tickCorrectionTime = 0;
     }
@@ -1543,7 +1539,7 @@ _messageLabel.hidden = YES;
 
 - (void) handleDecoderMovieError: (NSError *) error
 {
-    return;
+    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Failure", nil)
                                                         message:[error localizedDescription]
                                                        delegate:nil
