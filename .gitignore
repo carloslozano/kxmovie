@@ -33,3 +33,5 @@ thin
 
 
 SampleMovies/
+DerivedData/
+FFmpeg/

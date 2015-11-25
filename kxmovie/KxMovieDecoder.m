@@ -1233,7 +1233,7 @@ static int interrupt_callback(void *ctx);
 
 - (KxAudioFrame *) handleAudioFrame
 {
-    return nil;
+    //return nil;
     if (!_audioFrame->data[0])
         return nil;
     
@@ -1444,16 +1444,6 @@ static int interrupt_callback(void *ctx);
                 }
                 
                 if (gotframe) {
-                    
-                    if (!_disableDeinterlacing &&
-                        _videoFrame->interlaced_frame) {
-
-                        avpicture_deinterlace((AVPicture*)_videoFrame,
-                                              (AVPicture*)_videoFrame,
-                                              _videoCodecCtx->pix_fmt,
-                                              _videoCodecCtx->width,
-                                              _videoCodecCtx->height);
-                    }
                     
                     KxVideoFrame *frame = [self handleVideoFrame];
                     if (frame) {
