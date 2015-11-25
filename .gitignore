@@ -32,5 +32,5 @@ KxMovieExample/SampleMovies/*
 ## build-ffmpeg.sh
 scratch
 thin
-FFmpeg-iOS
-include
+
+DerivedData/
