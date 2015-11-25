@@ -449,11 +449,19 @@ enum {
             return nil;
         }
         
-        glGenFramebuffers(1, &_framebuffer);
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_TEXTURE);
+        glEnable(GL_TEXTURE0);
+        
+        glDisable(GL_DITHER);
+        
         glGenRenderbuffers(1, &_renderbuffer);
-        glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
         [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];
+        
+        glGenFramebuffers(1, &_framebuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+        
         glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
         glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderbuffer);
