@@ -67,8 +67,8 @@ static NSMutableDictionary * gHistory;
 
 #define LOCAL_MIN_BUFFERED_DURATION   0.2
 #define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 0.3
-#define NETWORK_MAX_BUFFERED_DURATION 1.4
+#define NETWORK_MIN_BUFFERED_DURATION 0.8
+#define NETWORK_MAX_BUFFERED_DURATION 1.6
 
 @interface KxMovieViewController () {
 
@@ -236,7 +236,7 @@ static NSMutableDictionary * gHistory;
     _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,40,width-40,40)];
     _messageLabel.backgroundColor = [UIColor clearColor];
     _messageLabel.textColor = [UIColor redColor];
-_messageLabel.hidden = YES;
+    _messageLabel.hidden = NO;
     _messageLabel.font = [UIFont systemFontOfSize:14];
     _messageLabel.numberOfLines = 2;
     _messageLabel.textAlignment = NSTextAlignmentCenter;
@@ -302,7 +302,7 @@ _messageLabel.hidden = YES;
     _leftLabel.font = [UIFont systemFontOfSize:12];
     _leftLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     
-    _infoButton = nil;// [UIButton buttonWithType:UIButtonTypeInfoDark];
+    _infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
     _infoButton.frame = CGRectMake(width-31, (topH-20)/2+1, 20, 20);
     _infoButton.showsTouchWhenHighlighted = YES;
     _infoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
@@ -545,7 +545,7 @@ _messageLabel.hidden = YES;
 - (void) resume {
     [self setMoviePosition:_progressSlider.value * _decoder.duration];
     [self updatePlayButton];
-//    [_decoder resume];
+    [_decoder resume];
 }
 
 - (void) pause
