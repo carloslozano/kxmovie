@@ -1214,19 +1214,11 @@ static int interrupt_callback(void *ctx);
     
     const int64_t frameDuration = av_frame_get_pkt_duration(_videoFrame);
     if (frameDuration) {
-        
         frame.duration = frameDuration * _videoTimeBase;
         frame.duration += _videoFrame->repeat_pict * _videoTimeBase * 0.5;
     } else {
         frame.duration = 1.0 / _fps;
     }    
-    
-#if 0
-    LoggerVideo(2, @"VFD: %.4f %.4f | %lld ",
-                frame.position,
-                frame.duration,
-                av_frame_get_pkt_pos(_videoFrame));
-#endif
     
     return frame;
 }
@@ -1382,9 +1374,13 @@ static int interrupt_callback(void *ctx);
     if (format == KxVideoFrameFormatYUV &&
         _videoCodecCtx &&
         (_videoCodecCtx->pix_fmt == AV_PIX_FMT_YUV420P || _videoCodecCtx->pix_fmt == AV_PIX_FMT_YUVJ420P)) {
-        
         _videoFrameFormat = KxVideoFrameFormatYUV;
         return YES;
+    } else if (_videoCodecCtx->pix_fmt == -1) {
+        _videoFrameFormat = KxVideoFrameFormatYUV;
+        return YES;
+    } else {
+        printf("??? %d \n", _videoCodecCtx->pix_fmt);
     }
     
     _videoFrameFormat = KxVideoFrameFormatRGB;
@@ -1433,10 +1429,7 @@ static int interrupt_callback(void *ctx);
             while (pktSize > 0) {
                             
                 int gotframe = 0;
-                int len = avcodec_decode_video2(_videoCodecCtx,
-                                                _videoFrame,
-                                                &gotframe,
-                                                &packet);
+                int len = avcodec_decode_video2(_videoCodecCtx,_videoFrame,&gotframe,&packet);
                 
                 if (len < 0) {
                     LoggerVideo(0, @"decode video error, skip packet");
@@ -1454,8 +1447,9 @@ static int interrupt_callback(void *ctx);
                         
                         _position = frame.position;
                         decodedDuration += frame.duration;
-                        if (decodedDuration > minDuration)
+                        if (decodedDuration > minDuration) {
                             finished = YES;
+                        }
                     }
                 }
                                 
@@ -1472,10 +1466,7 @@ static int interrupt_callback(void *ctx);
             while (pktSize > 0) {
                 
                 int gotframe = 0;
-                int len = avcodec_decode_audio4(_audioCodecCtx,
-                                                _audioFrame,                                                
-                                                &gotframe,
-                                                &packet);
+                int len = avcodec_decode_audio4(_audioCodecCtx,_audioFrame,&gotframe,&packet);
                 
                 if (len < 0) {
                     LoggerAudio(0, @"decode audio error, skip packet");

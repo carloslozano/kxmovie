@@ -44,7 +44,12 @@
                           @"http://192.168.1.36:1497/%/31987D264478245C38A7C9C1CEDC5B1A/ElephantsDream-DivXPlusHD.mkv",
                           @"http://192.168.1.36:1497/%/897B0E54E236685DEBB504B81A9DB2F3/Sintel.2010.720p.mkv",
                           @"http://192.168.1.36:1497/%/DD19F7F042525558AD20CBD6A5633FF5/Sintel.2010.1080p.mkv",
-                          @"http://192.168.1.36:1497/%/4EB8E60A5E5C1807A1E17A7B16CF8A9E/Sintel_DivXPlusHD_2Titles_6500kbps.mkv"
+                          @"http://192.168.1.36:1497/%/4EB8E60A5E5C1807A1E17A7B16CF8A9E/Sintel_DivXPlusHD_2Titles_6500kbps.mkv",
+                          @"http://192.168.1.36:1497/%/425CA9EC78FAF0BDF1930628C6BA2430/Avatar.ECE.2009.1080p.BrRip.x264.bitloks.YIFY.mp4",
+                          @"http://192.168.1.36:1497/%/7E9D9F0EBE5C6149C235A62A12ADA594/The%20Walking%20Dead%20S05E01.HDTV.x264-KILLERS.mp4",
+                          @"http://192.168.1.36:1497/%/97700E7A5849D3392DA9DA0BE22F48D8/Lord_of_the_Rings_Return_of_the_King_Ext_2003_1080p_BluRay_QEBS5_AAC51_PS3_MP4-FASM%202.mp4",
+                          @"http://192.168.1.36:1497/%/126C42AA434B4D2A1A446218391CA39E/Jaws.1975.1080p.BrRip.x264.bitloks.YIFY.mp4",
+                          @"http://192.168.1.36:1497/%/128A58D2040A2639856B554E7B00866A/Firefly%2015_Serenity%20The%20Movie.mp4"
                           ];
         
     }
@@ -234,8 +239,8 @@
         parameters[KxMovieParameterDisableDeinterlacing] = @(YES);
     
     // disable buffering
-    //parameters[KxMovieParameterMinBufferedDuration] = @(0.0f);
-    //parameters[KxMovieParameterMaxBufferedDuration] = @(0.0f);
+    parameters[KxMovieParameterMinBufferedDuration] = @(1.0f);
+    parameters[KxMovieParameterMaxBufferedDuration] = @(1.0f);
     
     KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path
                                                                                parameters:parameters];

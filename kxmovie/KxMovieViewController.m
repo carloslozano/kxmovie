@@ -67,13 +67,15 @@ static NSMutableDictionary * gHistory;
 
 #define LOCAL_MIN_BUFFERED_DURATION   0.2
 #define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 1.0
-#define NETWORK_MAX_BUFFERED_DURATION 2.0
+#define NETWORK_MIN_BUFFERED_DURATION 0.4
+#define NETWORK_MAX_BUFFERED_DURATION 0.8
 
 @interface KxMovieViewController () {
 
     KxMovieDecoder      *_decoder;    
     dispatch_queue_t    _dispatchQueue;
+    dispatch_queue_t    _dispatchQueueC;
+    
     NSMutableArray      *_videoFrames;
     NSMutableArray      *_audioFrames;
     NSMutableArray      *_subtitles;
@@ -209,8 +211,9 @@ static NSMutableDictionary * gHistory;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     if (_dispatchQueue) {
-        // Not needed as of ARC.
-//        dispatch_release(_dispatchQueue);
+        _dispatchQueue = NULL;
+    }
+    if (_dispatchQueueC) {
         _dispatchQueue = NULL;
     }
     
@@ -220,7 +223,7 @@ static NSMutableDictionary * gHistory;
 - (void)loadView
 {
     // LoggerStream(1, @"loadView");
-    CGRect bounds = [[UIScreen mainScreen] applicationFrame];
+    CGRect bounds = [[UIScreen mainScreen] bounds];
     
     self.view = [[UIView alloc] initWithFrame:bounds];
     self.view.backgroundColor = [UIColor blackColor];
@@ -252,6 +255,8 @@ static NSMutableDictionary * gHistory;
 
     _topHUD    = [[UIView alloc] initWithFrame:CGRectMake(0,0,0,0)];
     _topBar    = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, width, topH)];
+    _topBar.translucent = TRUE;
+    _topBar.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
     _bottomBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, height-botH, width, botH)];
     _bottomBar.tintColor = [UIColor blackColor];
 
@@ -659,6 +664,8 @@ static NSMutableDictionary * gHistory;
         
         _decoder        = decoder;
         _dispatchQueue  = dispatch_queue_create("KxMovie", DISPATCH_QUEUE_SERIAL);
+        _dispatchQueueC  = dispatch_queue_create("KxMovieC", DISPATCH_QUEUE_CONCURRENT);
+        
         _videoFrames    = [NSMutableArray array];
         _audioFrames    = [NSMutableArray array];
         
@@ -749,11 +756,12 @@ static NSMutableDictionary * gHistory;
     } 
     
     if (!_glView) {
-        
         LoggerVideo(0, @"fallback to use RGB video frame and UIKit");
         [_decoder setupVideoFrameFormat:KxVideoFrameFormatRGB];
         _imageView = [[UIImageView alloc] initWithFrame:bounds];
         _imageView.backgroundColor = [UIColor blackColor];
+    } else {
+        [_decoder setupVideoFrameFormat:KxVideoFrameFormatYUV];
     }
     
     UIView *frameView = [self frameView];
@@ -1021,11 +1029,11 @@ static NSMutableDictionary * gHistory;
     //NSAssert(dispatch_get_current_queue() == _dispatchQueue, @"bugcheck");
     
     NSArray *frames = nil;
+    const CGFloat duration = _decoder.isNetwork ? 0.0f : 0.1f;
     
-    if (_decoder.validVideo ||
-        _decoder.validAudio) {
+    if (_decoder.validVideo || _decoder.validAudio) {
         
-        frames = [_decoder decodeFrames:0];
+        frames = [_decoder decodeFrames:duration];
     }
     
     if (frames.count) {
@@ -1042,43 +1050,36 @@ static NSMutableDictionary * gHistory;
     __weak KxMovieViewController *weakSelf = self;
     __weak KxMovieDecoder *weakDecoder = _decoder;
     
-    const CGFloat duration = _decoder.isNetwork ? .0f : 0.1f;
+    const CGFloat duration = _decoder.isNetwork ? 0.0f : 0.1f;
     
     self.decoding = YES;
     dispatch_async(_dispatchQueue, ^{
         
-        {
+        //dispatch_async(_dispatchQueue_0, ^{
+            
             __strong KxMovieViewController *strongSelf = weakSelf;
             if (!strongSelf.playing)
                 return;
-        }
-        
-        BOOL good = YES;
-        while (good) {
             
-            good = NO;
+            BOOL good = YES;
+            while (good) {
+                good = NO;
             
-            @autoreleasepool {
-                
-                __strong KxMovieDecoder *decoder = weakDecoder;
-                
-                if (decoder && (decoder.validVideo || decoder.validAudio)) {
-                    
-                    NSArray *frames = [decoder decodeFrames:duration];
-                    if (frames.count) {
-                        
-                        __strong KxMovieViewController *strongSelf = weakSelf;
-                        if (strongSelf)
-                            good = [strongSelf addFrames:frames];
+                @autoreleasepool {
+                    __strong KxMovieDecoder *decoder = weakDecoder;
+                    if (decoder && (decoder.validVideo || decoder.validAudio)) {
+                        NSArray *frames = [decoder decodeFrames:duration];
+                        if (frames.count) {
+                            __strong KxMovieViewController *strongSelf = weakSelf;
+                            if (strongSelf)
+                                good = [strongSelf addFrames:frames];
+                        }
                     }
                 }
             }
-        }
-                
-        {
-            __strong KxMovieViewController *strongSelf = weakSelf;
+        
             if (strongSelf) strongSelf.decoding = NO;
-        }
+        //});
     });
 }
 
@@ -1189,9 +1190,6 @@ static NSMutableDictionary * gHistory;
             interval = [self presentVideoFrame:frame];
         
     } else if (_decoder.validAudio) {
-
-        //interval = _bufferedDuration * 0.5;
-                
         if (self.artworkFrame) {
             
             _imageView.image = [self.artworkFrame asImage];
@@ -1202,11 +1200,6 @@ static NSMutableDictionary * gHistory;
     if (_decoder.validSubtitles)
         [self presentSubtitles];
     
-#ifdef DEBUG
-    if (self.playing && _debugStartTime < 0)
-        _debugStartTime = [NSDate timeIntervalSinceReferenceDate] - _moviePosition;
-#endif
-
     return interval;
 }
 
@@ -1352,7 +1345,7 @@ static NSMutableDictionary * gHistory;
 
 #ifdef DEBUG
     const NSTimeInterval timeSinceStart = [NSDate timeIntervalSinceReferenceDate] - _debugStartTime;
-    NSString *subinfo = _decoder.validSubtitles ? [NSString stringWithFormat: @" %d",_subtitles.count] : @"";
+    NSString *subinfo = _decoder.validSubtitles ? [NSString stringWithFormat: @" %lu",(unsigned long)_subtitles.count] : @"";
     
     NSString *audioStatus;
     
@@ -1368,9 +1361,9 @@ static NSMutableDictionary * gHistory;
     else if (_debugAudioStatus == 3) audioStatus = @"\n(audio silence)";
     else audioStatus = @"";
 
-    _messageLabel.text = [NSString stringWithFormat:@"%d %d%@ %c - %@ %@ %@\n%@",
+    _messageLabel.text = [NSString stringWithFormat:@"%d %lu%@ %c - %@ %@ %@\n%@",
                           _videoFrames.count,
-                          _audioFrames.count,
+                          (unsigned long)_audioFrames.count,
                           subinfo,
                           self.decoding ? 'D' : ' ',
                           formatTimeInterval(timeSinceStart, NO),
@@ -1406,7 +1399,6 @@ static NSMutableDictionary * gHistory;
 {
     _fullscreen = on;
     UIApplication *app = [UIApplication sharedApplication];
-    [app setStatusBarHidden:on withAnimation:UIStatusBarAnimationNone];
     // if (!self.presentingViewController) {
     //[self.navigationController setNavigationBarHidden:on animated:YES];
     //[self.tabBarController setTabBarHidden:on animated:YES];
