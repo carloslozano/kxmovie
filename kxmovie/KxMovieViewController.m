@@ -67,8 +67,8 @@ static NSMutableDictionary * gHistory;
 
 #define LOCAL_MIN_BUFFERED_DURATION   0.2
 #define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 0.8
-#define NETWORK_MAX_BUFFERED_DURATION 1.6
+#define NETWORK_MIN_BUFFERED_DURATION 2.0
+#define NETWORK_MAX_BUFFERED_DURATION 4.0
 
 @interface KxMovieViewController () {
 
@@ -206,6 +206,8 @@ static NSMutableDictionary * gHistory;
 {
     [self pause];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     if (_dispatchQueue) {
         // Not needed as of ARC.
 //        dispatch_release(_dispatchQueue);
@@ -222,6 +224,7 @@ static NSMutableDictionary * gHistory;
     
     self.view = [[UIView alloc] initWithFrame:bounds];
     self.view.backgroundColor = [UIColor blackColor];
+    self.view.tintColor = [UIColor blackColor];
 
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
     _activityIndicatorView.center = self.view.center;
@@ -269,7 +272,7 @@ static NSMutableDictionary * gHistory;
     _doneButton.backgroundColor = [UIColor clearColor];
 //    _doneButton.backgroundColor = [UIColor redColor];
     [_doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_doneButton setTitle:NSLocalizedString(@"off", nil) forState:UIControlStateNormal];
+    [_doneButton setTitle:NSLocalizedString(@"OK", nil) forState:UIControlStateNormal];
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:18];
     _doneButton.showsTouchWhenHighlighted = YES;
     [_doneButton addTarget:self action:@selector(doneDidTouch:)
@@ -413,6 +416,7 @@ static NSMutableDictionary * gHistory;
     if (_infoMode)
         [self showInfoView:NO animated:NO];
     
+    _savedIdleTimer = [[UIApplication sharedApplication] isIdleTimerDisabled];
     
     [self showHUD: YES];
     
@@ -424,10 +428,17 @@ static NSMutableDictionary * gHistory;
 
         [_activityIndicatorView startAnimating];
     }
+   
+        
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:[UIApplication sharedApplication]];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [super viewWillDisappear:animated];
     
@@ -446,7 +457,7 @@ static NSMutableDictionary * gHistory;
     
     if (_fullscreen)
         [self fullscreenMode:NO];
-
+    [[UIApplication sharedApplication] setIdleTimerDisabled:_savedIdleTimer];
     
     [_activityIndicatorView stopAnimating];
     _buffered = NO;
@@ -458,6 +469,14 @@ static NSMutableDictionary * gHistory;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (void) applicationWillResignActive: (NSNotification *)notification
+{
+    [self showHUD:YES];
+    [self pause];
+    
+    LoggerStream(1, @"applicationWillResignActive");
 }
 
 #pragma mark - gesture recognizer
@@ -552,8 +571,9 @@ static NSMutableDictionary * gHistory;
 {
     if (!self.playing)
         return;
+
     self.playing = NO;
-//    _interrupted = YES;
+    //_interrupted = YES;
     [self enableAudio:NO];
     [self updatePlayButton];
     LoggerStream(1, @"pause movie");
@@ -1366,7 +1386,7 @@ static NSMutableDictionary * gHistory;
     _hiddenHUD = !show;    
     _panGestureRecognizer.enabled = _hiddenHUD;
         
-//    [[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
     
     [UIView animateWithDuration:0.2
                           delay:0.0
@@ -1385,8 +1405,8 @@ static NSMutableDictionary * gHistory;
 - (void) fullscreenMode: (BOOL) on
 {
     _fullscreen = on;
-//    UIApplication *app = [UIApplication sharedApplication];
-//    [app setStatusBarHidden:on withAnimation:UIStatusBarAnimationNone];
+    UIApplication *app = [UIApplication sharedApplication];
+    [app setStatusBarHidden:on withAnimation:UIStatusBarAnimationNone];
     // if (!self.presentingViewController) {
     //[self.navigationController setNavigationBarHidden:on animated:YES];
     //[self.tabBarController setTabBarHidden:on animated:YES];
@@ -1486,7 +1506,7 @@ static NSMutableDictionary * gHistory;
     if (!_tableView)
         [self createTableView];
 
-    [self pause];
+    //[self pause];
     
     CGSize size = self.view.bounds.size;
     CGFloat Y = _topHUD.bounds.size.height;

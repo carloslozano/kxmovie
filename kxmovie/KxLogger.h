@@ -5,7 +5,6 @@
 //  Created by Mathieu Godart on 01/05/2014.
 //
 //
-#import <UIKit/UIKit.h>
 
 #ifndef kxmovie_KxLogger_h
 #define kxmovie_KxLogger_h

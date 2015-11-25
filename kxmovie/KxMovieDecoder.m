@@ -11,12 +11,10 @@
 
 #import "KxMovieDecoder.h"
 #import <Accelerate/Accelerate.h>
-#include "libavformat/avformat.h"
-#include "libswscale/swscale.h"
-#include "libswresample/swresample.h"
-#include "libavutil/pixdesc.h"
 #import "KxAudioManager.h"
 #import "KxLogger.h"
+
+#define kDefaultTimeout 3
 
 ////////////////////////////////////////////////////////////////////////////////
 NSString * kxmovieErrorDomain = @"ru.kolyvan.kxmovie";
@@ -88,131 +86,131 @@ static BOOL audioCodecIsSupported(AVCodecContext *audio)
     return NO;
 }
 
-//#ifdef DEBUG
-//static void fillSignal(SInt16 *outData,  UInt32 numFrames, UInt32 numChannels)
-//{
-//    static float phase = 0.0;
-//    
-//    for (int i=0; i < numFrames; ++i)
-//    {
-//        for (int iChannel = 0; iChannel < numChannels; ++iChannel)
-//        {
-//            float theta = phase * M_PI * 2;
-//            outData[i*numChannels + iChannel] = sin(theta) * (float)INT16_MAX;
-//        }
-//        phase += 1.0 / (44100 / 440.0);
-//        if (phase > 1.0) phase = -1;
-//    }
-//}
-//
-//static void fillSignalF(float *outData,  UInt32 numFrames, UInt32 numChannels)
-//{
-//    static float phase = 0.0;
-//    
-//    for (int i=0; i < numFrames; ++i)
-//    {
-//        for (int iChannel = 0; iChannel < numChannels; ++iChannel)
-//        {
-//            float theta = phase * M_PI * 2;
-//            outData[i*numChannels + iChannel] = sin(theta);
-//        }
-//        phase += 1.0 / (44100 / 440.0);
-//        if (phase > 1.0) phase = -1;
-//    }
-//}
-//
-//static void testConvertYUV420pToRGB(AVFrame * frame, uint8_t *outbuf, int linesize, int height)
-//{
-//    const int linesizeY = frame->linesize[0];
-//    const int linesizeU = frame->linesize[1];
-//    const int linesizeV = frame->linesize[2];
-//    
-//    assert(height == frame->height);
-//    assert(linesize  <= linesizeY * 3);
-//    assert(linesizeY == linesizeU * 2);
-//    assert(linesizeY == linesizeV * 2);
-//    
-//    uint8_t *pY = frame->data[0];
-//    uint8_t *pU = frame->data[1];
-//    uint8_t *pV = frame->data[2];
-//    
-//    const int width = linesize / 3;
-//    
-//    for (int y = 0; y < height; y += 2) {
-//        
-//        uint8_t *dst1 = outbuf + y       * linesize;
-//        uint8_t *dst2 = outbuf + (y + 1) * linesize;
-//        
-//        uint8_t *py1  = pY  +  y       * linesizeY;
-//        uint8_t *py2  = py1 +            linesizeY;
-//        uint8_t *pu   = pU  + (y >> 1) * linesizeU;
-//        uint8_t *pv   = pV  + (y >> 1) * linesizeV;
-//        
-//        for (int i = 0; i < width; i += 2) {
-//            
-//            int Y1 = py1[i];
-//            int Y2 = py2[i];
-//            int Y3 = py1[i+1];
-//            int Y4 = py2[i+1];
-//            
-//            int U = pu[(i >> 1)] - 128;
-//            int V = pv[(i >> 1)] - 128;
-//            
-//            int dr = (int)(             1.402f * V);
-//            int dg = (int)(0.344f * U + 0.714f * V);
-//            int db = (int)(1.772f * U);
-//            
-//            int r1 = Y1 + dr;
-//            int g1 = Y1 - dg;
-//            int b1 = Y1 + db;
-//            
-//            int r2 = Y2 + dr;
-//            int g2 = Y2 - dg;
-//            int b2 = Y2 + db;
-//            
-//            int r3 = Y3 + dr;
-//            int g3 = Y3 - dg;
-//            int b3 = Y3 + db;
-//            
-//            int r4 = Y4 + dr;
-//            int g4 = Y4 - dg;
-//            int b4 = Y4 + db;
-//            
-//            r1 = r1 > 255 ? 255 : r1 < 0 ? 0 : r1;
-//            g1 = g1 > 255 ? 255 : g1 < 0 ? 0 : g1;
-//            b1 = b1 > 255 ? 255 : b1 < 0 ? 0 : b1;
-//            
-//            r2 = r2 > 255 ? 255 : r2 < 0 ? 0 : r2;
-//            g2 = g2 > 255 ? 255 : g2 < 0 ? 0 : g2;
-//            b2 = b2 > 255 ? 255 : b2 < 0 ? 0 : b2;
-//            
-//            r3 = r3 > 255 ? 255 : r3 < 0 ? 0 : r3;
-//            g3 = g3 > 255 ? 255 : g3 < 0 ? 0 : g3;
-//            b3 = b3 > 255 ? 255 : b3 < 0 ? 0 : b3;
-//            
-//            r4 = r4 > 255 ? 255 : r4 < 0 ? 0 : r4;
-//            g4 = g4 > 255 ? 255 : g4 < 0 ? 0 : g4;
-//            b4 = b4 > 255 ? 255 : b4 < 0 ? 0 : b4;
-//            
-//            dst1[3*i + 0] = r1;
-//            dst1[3*i + 1] = g1;
-//            dst1[3*i + 2] = b1;
-//            
-//            dst2[3*i + 0] = r2;
-//            dst2[3*i + 1] = g2;
-//            dst2[3*i + 2] = b2;
-//            
-//            dst1[3*i + 3] = r3;
-//            dst1[3*i + 4] = g3;
-//            dst1[3*i + 5] = b3;
-//            
-//            dst2[3*i + 3] = r4;
-//            dst2[3*i + 4] = g4;
-//            dst2[3*i + 5] = b4;            
-//        }
-//    }
-//}
-//#endif
+#ifdef DEBUG
+static void fillSignal(SInt16 *outData,  UInt32 numFrames, UInt32 numChannels)
+{
+    static float phase = 0.0;
+    
+    for (int i=0; i < numFrames; ++i)
+    {
+        for (int iChannel = 0; iChannel < numChannels; ++iChannel)
+        {
+            float theta = phase * M_PI * 2;
+            outData[i*numChannels + iChannel] = sin(theta) * (float)INT16_MAX;
+        }
+        phase += 1.0 / (44100 / 440.0);
+        if (phase > 1.0) phase = -1;
+    }
+}
+
+static void fillSignalF(float *outData,  UInt32 numFrames, UInt32 numChannels)
+{
+    static float phase = 0.0;
+    
+    for (int i=0; i < numFrames; ++i)
+    {
+        for (int iChannel = 0; iChannel < numChannels; ++iChannel)
+        {
+            float theta = phase * M_PI * 2;
+            outData[i*numChannels + iChannel] = sin(theta);
+        }
+        phase += 1.0 / (44100 / 440.0);
+        if (phase > 1.0) phase = -1;
+    }
+}
+
+static void testConvertYUV420pToRGB(AVFrame * frame, uint8_t *outbuf, int linesize, int height)
+{
+    const int linesizeY = frame->linesize[0];
+    const int linesizeU = frame->linesize[1];
+    const int linesizeV = frame->linesize[2];
+    
+    assert(height == frame->height);
+    assert(linesize  <= linesizeY * 3);
+    assert(linesizeY == linesizeU * 2);
+    assert(linesizeY == linesizeV * 2);
+    
+    uint8_t *pY = frame->data[0];
+    uint8_t *pU = frame->data[1];
+    uint8_t *pV = frame->data[2];
+    
+    const int width = linesize / 3;
+    
+    for (int y = 0; y < height; y += 2) {
+        
+        uint8_t *dst1 = outbuf + y       * linesize;
+        uint8_t *dst2 = outbuf + (y + 1) * linesize;
+        
+        uint8_t *py1  = pY  +  y       * linesizeY;
+        uint8_t *py2  = py1 +            linesizeY;
+        uint8_t *pu   = pU  + (y >> 1) * linesizeU;
+        uint8_t *pv   = pV  + (y >> 1) * linesizeV;
+        
+        for (int i = 0; i < width; i += 2) {
+            
+            int Y1 = py1[i];
+            int Y2 = py2[i];
+            int Y3 = py1[i+1];
+            int Y4 = py2[i+1];
+            
+            int U = pu[(i >> 1)] - 128;
+            int V = pv[(i >> 1)] - 128;
+            
+            int dr = (int)(             1.402f * V);
+            int dg = (int)(0.344f * U + 0.714f * V);
+            int db = (int)(1.772f * U);
+            
+            int r1 = Y1 + dr;
+            int g1 = Y1 - dg;
+            int b1 = Y1 + db;
+            
+            int r2 = Y2 + dr;
+            int g2 = Y2 - dg;
+            int b2 = Y2 + db;
+            
+            int r3 = Y3 + dr;
+            int g3 = Y3 - dg;
+            int b3 = Y3 + db;
+            
+            int r4 = Y4 + dr;
+            int g4 = Y4 - dg;
+            int b4 = Y4 + db;
+            
+            r1 = r1 > 255 ? 255 : r1 < 0 ? 0 : r1;
+            g1 = g1 > 255 ? 255 : g1 < 0 ? 0 : g1;
+            b1 = b1 > 255 ? 255 : b1 < 0 ? 0 : b1;
+            
+            r2 = r2 > 255 ? 255 : r2 < 0 ? 0 : r2;
+            g2 = g2 > 255 ? 255 : g2 < 0 ? 0 : g2;
+            b2 = b2 > 255 ? 255 : b2 < 0 ? 0 : b2;
+            
+            r3 = r3 > 255 ? 255 : r3 < 0 ? 0 : r3;
+            g3 = g3 > 255 ? 255 : g3 < 0 ? 0 : g3;
+            b3 = b3 > 255 ? 255 : b3 < 0 ? 0 : b3;
+            
+            r4 = r4 > 255 ? 255 : r4 < 0 ? 0 : r4;
+            g4 = g4 > 255 ? 255 : g4 < 0 ? 0 : g4;
+            b4 = b4 > 255 ? 255 : b4 < 0 ? 0 : b4;
+            
+            dst1[3*i + 0] = r1;
+            dst1[3*i + 1] = g1;
+            dst1[3*i + 2] = b1;
+            
+            dst2[3*i + 0] = r2;
+            dst2[3*i + 1] = g2;
+            dst2[3*i + 2] = b2;
+            
+            dst1[3*i + 3] = r3;
+            dst1[3*i + 4] = g3;
+            dst1[3*i + 5] = b3;
+            
+            dst2[3*i + 3] = r4;
+            dst2[3*i + 4] = g4;
+            dst2[3*i + 5] = b4;            
+        }
+    }
+}
+#endif
 
 static void avStreamFPSTimeBase(AVStream *st, CGFloat defaultTimeBase, CGFloat *pFPS, CGFloat *pTimeBase)
 {
@@ -423,6 +421,12 @@ static int interrupt_callback(void *ctx);
     NSUInteger          _artworkStream;
     NSInteger           _subtitleASSEvents;
 }
+
+@property (nonatomic, strong) NSLock *lock;
+@property (nonatomic, assign) BOOL  decoding;
+@property (nonatomic, assign) BOOL  closed;
+@property (nonatomic, strong) NSMutableArray    *frames;
+
 @end
 
 @implementation KxMovieDecoder
@@ -454,12 +458,12 @@ static int interrupt_callback(void *ctx);
 
 - (CGFloat) position
 {
-    return _position;
+    return _position - self.startDuration;
 }
 
 - (void) setPosition: (CGFloat)seconds
 {
-    _position = seconds;
+    _position = seconds + self.startDuration;
     _isEOF = NO;
 	   
     if (_videoStream != -1) {
@@ -709,8 +713,13 @@ static int interrupt_callback(void *ctx);
 - (id)init {
     self = [super init];
     if (self) {
+        self.timeout = kDefaultTimeout;
         self.isPause = NO;
-        
+        self.decoding = NO;
+        self.closed = NO;
+        self.frames = [[NSMutableArray alloc] init];
+        self.lock = [[NSLock alloc] init];
+        self.hasStartDurationSet = NO;
     }
     return self;
 }
@@ -728,6 +737,8 @@ static int interrupt_callback(void *ctx);
     NSAssert(path, @"nil path");
     NSAssert(!_formatCtx, @"already open");
     
+    self.closed = NO;
+    
     _isNetwork = isNetworkPath(path);
     
     static BOOL needNetworkInit = YES;
@@ -739,6 +750,7 @@ static int interrupt_callback(void *ctx);
     
     _path = path;
     
+    self.lastFrameTS = [NSDate timeIntervalSinceReferenceDate];
     kxMovieError errCode = [self openInput: path];
     
     if (errCode == kxMovieErrorNone) {
@@ -802,7 +814,7 @@ static int interrupt_callback(void *ctx);
         return kxMovieErrorOpenFile;
     }
 
-    formatCtx->flags |= AVFMT_FLAG_NOBUFFER;
+    
 //    formatCtx->flags |= AVFMT_FLAG_IGNDTS;
 
     if (avformat_find_stream_info(formatCtx, NULL) < 0) {
@@ -1012,6 +1024,14 @@ static int interrupt_callback(void *ctx);
 
 -(void) closeFile
 {
+    if (self.closed) {
+        return;
+    }
+    
+    self.closed = YES;
+    
+    self.lastFrameTS = [NSDate timeIntervalSinceReferenceDate];
+    
     [self closeAudioStream];
     [self closeVideoStream];
     [self closeSubtitleStream];
@@ -1160,8 +1180,6 @@ static int interrupt_callback(void *ctx);
     
         if (!_swsContext &&
             ![self setupScaler]) {
-            
-            LoggerVideo(0, @"fail setup video scaler");
             return nil;
         }
         
@@ -1186,20 +1204,20 @@ static int interrupt_callback(void *ctx);
     frame.height = _videoCodecCtx->height;
     frame.position = av_frame_get_best_effort_timestamp(_videoFrame) * _videoTimeBase;
     
+    if (!self.hasStartDurationSet) {
+        self.startDuration = frame.position;
+        self.hasStartDurationSet = YES;
+    }
+    
+    frame.position -= self.startDuration;
+    _position = frame.position;
+    
     const int64_t frameDuration = av_frame_get_pkt_duration(_videoFrame);
     if (frameDuration) {
         
         frame.duration = frameDuration * _videoTimeBase;
         frame.duration += _videoFrame->repeat_pict * _videoTimeBase * 0.5;
-        
-        //if (_videoFrame->repeat_pict > 0) {
-        //    LoggerVideo(0, @"_videoFrame.repeat_pict %d", _videoFrame->repeat_pict);
-        //}
-        
     } else {
-        
-        // sometimes, ffmpeg unable to determine a frame duration
-        // as example yuvj420p stream from web camera
         frame.duration = 1.0 / _fps;
     }    
     
@@ -1215,6 +1233,7 @@ static int interrupt_callback(void *ctx);
 
 - (KxAudioFrame *) handleAudioFrame
 {
+    return nil;
     if (!_audioFrame->data[0])
         return nil;
     
@@ -1283,6 +1302,13 @@ static int interrupt_callback(void *ctx);
     frame.duration = av_frame_get_pkt_duration(_audioFrame) * _audioTimeBase;
     frame.samples = data;
     
+    if (!self.hasStartDurationSet) {
+        self.startDuration = frame.position;
+        self.hasStartDurationSet = YES;
+    }
+    
+    frame.position -= self.startDuration;
+    
     if (frame.duration == 0) {
         // sometimes ffmpeg can't determine the duration of audio frame
         // especially of wma/wmv format
@@ -1290,12 +1316,6 @@ static int interrupt_callback(void *ctx);
         frame.duration = frame.samples.length / (sizeof(float) * numChannels * audioManager.samplingRate);
     }
     
-#if 0
-    LoggerAudio(2, @"AFD: %.4f %.4f | %.4f ",
-                frame.position,
-                frame.duration,
-                frame.samples.length / (8.0 * 44100.0));
-#endif
     
     return frame;
 }
@@ -1373,9 +1393,18 @@ static int interrupt_callback(void *ctx);
 
 - (NSArray *) decodeFrames: (CGFloat) minDuration
 {
-    if (_videoStream == -1 &&
-        _audioStream == -1)
+    if ((_videoStream == -1 && _audioStream == -1) ||
+        !_formatCtx) {
         return nil;
+    }
+    
+    if (self.decoding || self.closed) {
+        return nil;
+    }
+    
+    self.decoding = YES;
+    
+    [self.lock lock];
 
     NSMutableArray *result = [NSMutableArray array];
     
@@ -1386,9 +1415,14 @@ static int interrupt_callback(void *ctx);
     BOOL finished = NO;
     
     while (!finished) {
+        if (!_formatCtx) {
+            _isEOF = YES;
+            break;
+        }
         
         if (av_read_frame(_formatCtx, &packet) < 0) {
             _isEOF = YES;
+            av_free_packet(&packet);
             break;
         }
         
@@ -1414,17 +1448,19 @@ static int interrupt_callback(void *ctx);
                     if (!_disableDeinterlacing &&
                         _videoFrame->interlaced_frame) {
 
-//                        avpicture_deinterlace((AVPicture*)_videoFrame,
-//                                              (AVPicture*)_videoFrame,
-//                                              _videoCodecCtx->pix_fmt,
-//                                              _videoCodecCtx->width,
-//                                              _videoCodecCtx->height);
+                        avpicture_deinterlace((AVPicture*)_videoFrame,
+                                              (AVPicture*)_videoFrame,
+                                              _videoCodecCtx->pix_fmt,
+                                              _videoCodecCtx->width,
+                                              _videoCodecCtx->height);
                     }
                     
                     KxVideoFrame *frame = [self handleVideoFrame];
                     if (frame) {
                         
                         [result addObject:frame];
+                        
+                        self.lastFrameTS = [NSDate timeIntervalSinceReferenceDate];
                         
                         _position = frame.position;
                         decodedDuration += frame.duration;
@@ -1462,6 +1498,8 @@ static int interrupt_callback(void *ctx);
                     if (frame) {
                         
                         [result addObject:frame];
+                        
+                        self.lastFrameTS = [NSDate timeIntervalSinceReferenceDate];
                                                 
                         if (_videoStream == -1) {
                             
@@ -1524,6 +1562,10 @@ static int interrupt_callback(void *ctx);
 
         av_free_packet(&packet);
 	}
+    
+    [self.lock unlock];
+    
+    self.decoding = NO;
 
     return result;
 }
@@ -1552,6 +1594,18 @@ static int interrupt_callback(void *ctx)
     if (!ctx)
         return 0;
     __unsafe_unretained KxMovieDecoder *p = (__bridge KxMovieDecoder *)ctx;
+    
+    NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
+    if (p.lastFrameTS && now - p.lastFrameTS > p.timeout) {
+        if ([p.delegate respondsToSelector:@selector(movieDecoderDidInterrupt:)]) {
+            [p.delegate movieDecoderDidInterrupt:p];
+        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [p closeFile];
+        });
+        return YES;
+    }
+    
     const BOOL r = [p interruptDecoder];
     if (r) LoggerStream(1, @"DEBUG: INTERRUPT_CALLBACK!");
     return r;

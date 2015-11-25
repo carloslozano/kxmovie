@@ -229,9 +229,8 @@
     }
     
     // increase buffering for .wmv, it solves problem with delaying audio frames
-    //if ([path.pathExtension isEqualToString:@"wmv"])
-    //parameters[KxMovieParameterMinBufferedDuration] = @(1.0);
-    //parameters[KxMovieParameterMaxBufferedDuration] = @(3.0);
+    if ([path.pathExtension isEqualToString:@"wmv"])
+        parameters[KxMovieParameterMinBufferedDuration] = @(5.0);
     
     // disable deinterlacing for iPhone, because it's complex operation can cause stuttering
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
