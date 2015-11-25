@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E4E3F871C0624DB000CEFA0 /* SampleMovies in Resources */ = {isa = PBXBuildFile; fileRef = 4E4E3F861C0624DB000CEFA0 /* SampleMovies */; };
 		4EFB4B741C05B64000ED147E /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B681C05B64000ED147E /* libavcodec.a */; };
 		4EFB4B751C05B64000ED147E /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B691C05B64000ED147E /* libavfilter.a */; };
 		4EFB4B761C05B64000ED147E /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6A1C05B64000ED147E /* libavformat.a */; };
@@ -82,6 +83,7 @@
 /* Begin PBXFileReference section */
 		07D459C0599C42B1906B39AD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		49D953B9D2DC48FBB580C6AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E4E3F861C0624DB000CEFA0 /* SampleMovies */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SampleMovies; sourceTree = "<group>"; };
 		4E6AB9BC191288370010CAA1 /* kxmovie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kxmovie-Prefix.pch"; sourceTree = "<group>"; };
 		4E6AB9BD19128FDA0010CAA1 /* KxLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KxLogger.h; sourceTree = "<group>"; };
 		4EFB4B681C05B64000ED147E /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = FFmpeg/lib/libavcodec.a; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		87E793EB16390F10000A0848 = {
 			isa = PBXGroup;
 			children = (
+				4E4E3F861C0624DB000CEFA0 /* SampleMovies */,
 				87E7940216390F6D000A0848 /* KxMovieExample */,
 				87FD6177163A75440090956E /* kxmovie */,
 				87E793FB16390F6D000A0848 /* Frameworks */,
@@ -367,7 +370,7 @@
 				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					87E793F716390F6D000A0848 = {
-						DevelopmentTeam = 82J7XA77JC;
+						DevelopmentTeam = 2G3S9L8W64;
 					};
 				};
 			};
@@ -395,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87E7940F16390F6D000A0848 /* Default.png in Resources */,
+				4E4E3F871C0624DB000CEFA0 /* SampleMovies in Resources */,
 				87E7941116390F6D000A0848 /* Default@2x.png in Resources */,
 				87E7941316390F6D000A0848 /* Default-568h@2x.png in Resources */,
 			);
@@ -527,7 +531,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.kolyvan.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F7D87EB9-8C75-4EE9-AB3B-466913B9C8CB";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -571,7 +575,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.kolyvan.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F7D87EB9-8C75-4EE9-AB3B-466913B9C8CB";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

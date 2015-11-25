@@ -26,13 +26,10 @@ libs/FFmpeg/*
 output/*
 plan
 
-
-KxMovieExample/SampleMovies/*
-
 ## build-ffmpeg.sh
 scratch
 thin
 
-DerivedData/
 
-DerivedData/
+
+SampleMovies/
