@@ -75,13 +75,13 @@
     [super viewDidLoad];
 
 #ifdef DEBUG_AUTOPLAY
-    //[self performSelector:@selector(launchDebugTest) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(launchDebugTest) withObject:nil afterDelay:0.5];
 #endif
 }
 
 - (void)launchDebugTest
 {
-    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:19 inSection:0]];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:7 inSection:1]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -240,7 +240,7 @@
     
     // disable buffering
     parameters[KxMovieParameterMinBufferedDuration] = @(1.0f);
-    parameters[KxMovieParameterMaxBufferedDuration] = @(1.0f);
+    parameters[KxMovieParameterMaxBufferedDuration] = @(2.0f);
     
     KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path
                                                                                parameters:parameters];
