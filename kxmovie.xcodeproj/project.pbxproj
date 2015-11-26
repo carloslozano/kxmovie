@@ -8,18 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		4E4E3F871C0624DB000CEFA0 /* SampleMovies in Resources */ = {isa = PBXBuildFile; fileRef = 4E4E3F861C0624DB000CEFA0 /* SampleMovies */; };
-		4E9474EF1C075676009582FC /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B681C05B64000ED147E /* libavcodec.a */; };
-		4E9474F01C075676009582FC /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B691C05B64000ED147E /* libavfilter.a */; };
-		4E9474F11C075676009582FC /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6A1C05B64000ED147E /* libavformat.a */; };
-		4E9474F21C075676009582FC /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6B1C05B64000ED147E /* libavutil.a */; };
-		4E9474F31C075676009582FC /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6C1C05B64000ED147E /* libcrypto.a */; };
-		4E9474F41C075676009582FC /* libfdk-aac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6D1C05B64000ED147E /* libfdk-aac.a */; };
-		4E9474F51C075676009582FC /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6E1C05B64000ED147E /* libpostproc.a */; };
-		4E9474F61C075676009582FC /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6F1C05B64000ED147E /* libssl.a */; };
-		4E9474F71C075676009582FC /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B701C05B64000ED147E /* libswresample.a */; };
-		4E9474F81C075676009582FC /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B711C05B64000ED147E /* libswscale.a */; };
-		4E9474F91C075676009582FC /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B721C05B64000ED147E /* libvpx.a */; };
-		4E9474FA1C075676009582FC /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B731C05B64000ED147E /* libx264.a */; };
+		4E9475341C079FB4009582FC /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B681C05B64000ED147E /* libavcodec.a */; };
+		4E9475351C079FB4009582FC /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6A1C05B64000ED147E /* libavformat.a */; };
+		4E9475361C079FB4009582FC /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6B1C05B64000ED147E /* libavutil.a */; };
+		4E9475371C079FB4009582FC /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6C1C05B64000ED147E /* libcrypto.a */; };
+		4E9475381C079FB4009582FC /* libfdk-aac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6D1C05B64000ED147E /* libfdk-aac.a */; };
+		4E9475391C079FB4009582FC /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6F1C05B64000ED147E /* libssl.a */; };
+		4E94753A1C079FB4009582FC /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B701C05B64000ED147E /* libswresample.a */; };
+		4E94753B1C079FB4009582FC /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B711C05B64000ED147E /* libswscale.a */; };
+		4E94753C1C079FB4009582FC /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B721C05B64000ED147E /* libvpx.a */; };
+		4E94753D1C079FB4009582FC /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B731C05B64000ED147E /* libx264.a */; };
 		4EFB4B811C05B65400ED147E /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B801C05B65400ED147E /* libbz2.tbd */; };
 		4EFB4B831C05BC8C00ED147E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B821C05BC8C00ED147E /* AVFoundation.framework */; };
 		7B5F24851B78B1AB00252438 /* FNRTSPViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7B5F24831B78B19D00252438 /* FNRTSPViewController.h */; };
@@ -160,19 +158,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E9474EF1C075676009582FC /* libavcodec.a in Frameworks */,
-				4E9474F01C075676009582FC /* libavfilter.a in Frameworks */,
-				4E9474F11C075676009582FC /* libavformat.a in Frameworks */,
-				4E9474F21C075676009582FC /* libavutil.a in Frameworks */,
-				4E9474F31C075676009582FC /* libcrypto.a in Frameworks */,
-				4E9474F41C075676009582FC /* libfdk-aac.a in Frameworks */,
-				4E9474F51C075676009582FC /* libpostproc.a in Frameworks */,
-				4E9474F61C075676009582FC /* libssl.a in Frameworks */,
-				4E9474F71C075676009582FC /* libswresample.a in Frameworks */,
-				4E9474F81C075676009582FC /* libswscale.a in Frameworks */,
-				4E9474F91C075676009582FC /* libvpx.a in Frameworks */,
-				4E9474FA1C075676009582FC /* libx264.a in Frameworks */,
 				4EFB4B831C05BC8C00ED147E /* AVFoundation.framework in Frameworks */,
+				4E9475341C079FB4009582FC /* libavcodec.a in Frameworks */,
+				4E9475351C079FB4009582FC /* libavformat.a in Frameworks */,
+				4E9475361C079FB4009582FC /* libavutil.a in Frameworks */,
+				4E9475371C079FB4009582FC /* libcrypto.a in Frameworks */,
+				4E9475381C079FB4009582FC /* libfdk-aac.a in Frameworks */,
+				4E9475391C079FB4009582FC /* libssl.a in Frameworks */,
+				4E94753A1C079FB4009582FC /* libswresample.a in Frameworks */,
+				4E94753B1C079FB4009582FC /* libswscale.a in Frameworks */,
+				4E94753C1C079FB4009582FC /* libvpx.a in Frameworks */,
+				4E94753D1C079FB4009582FC /* libx264.a in Frameworks */,
 				4EFB4B811C05B65400ED147E /* libbz2.tbd in Frameworks */,
 				8704657C16F6ECA000D4083E /* libiconv.dylib in Frameworks */,
 				87E7945116391BC1000A0848 /* libz.dylib in Frameworks */,

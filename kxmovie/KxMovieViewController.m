@@ -65,10 +65,10 @@ enum {
 
 static NSMutableDictionary * gHistory;
 
-#define LOCAL_MIN_BUFFERED_DURATION   0.2
-#define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 4.0
-#define NETWORK_MAX_BUFFERED_DURATION 8.0
+#define LOCAL_MIN_BUFFERED_DURATION   1.0
+#define LOCAL_MAX_BUFFERED_DURATION   2.0
+#define NETWORK_MIN_BUFFERED_DURATION 2.0
+#define NETWORK_MAX_BUFFERED_DURATION 4.0
 
 @interface KxMovieViewController () {
 
@@ -892,7 +892,7 @@ static NSMutableDictionary * gHistory;
                                 _debugAudioStatus = 1;
                                 _debugAudioStatusTS = [NSDate date];
 #endif
-                                break; // silence and exit
+                                //break; // silence and exit
                             }
                             
                             [_audioFrames removeObjectAtIndex:0];
@@ -1050,7 +1050,7 @@ static NSMutableDictionary * gHistory;
     __weak KxMovieViewController *weakSelf = self;
     __weak KxMovieDecoder *weakDecoder = _decoder;
     
-    const CGFloat duration = _decoder.isNetwork ? 0.0f : 0.1f;
+    const CGFloat duration = _decoder.isNetwork ? 0.1f : 0.1f;
     
     self.decoding = YES;
     dispatch_async(_dispatchQueue, ^{

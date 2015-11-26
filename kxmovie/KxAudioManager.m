@@ -20,9 +20,8 @@
 #import "KxLogger.h"
 
 #define MAX_FRAME_SIZE 4096
-#define MAX_CHAN       2
+#define MAX_CHAN       6
 
-#define MAX_SAMPLE_DUMPED 5
 
 static BOOL checkError(OSStatus error, const char *operation);
 static void sessionPropertyListener(void *inClientData, AudioSessionPropertyID inID, UInt32 inDataSize, const void *inData);
@@ -84,7 +83,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 	if (self) {
         
         _outData = (float *)calloc(MAX_FRAME_SIZE*MAX_CHAN, sizeof(float));
-        _outputVolume = 0.5;        
+        _outputVolume = 1.0;
 	}	
 	return self;
 }
@@ -101,34 +100,6 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
 #pragma mark - private
 
 // Debug: dump the current frame data. Limited to 20 samples.
-
-#define dumpAudioSamples(prefix, dataBuffer, samplePrintFormat, sampleCount, channelCount) \
-{ \
-    NSMutableString *dump = [NSMutableString stringWithFormat:prefix]; \
-    for (int i = 0; i < MIN(MAX_SAMPLE_DUMPED, sampleCount); i++) \
-    { \
-        for (int j = 0; j < channelCount; j++) \
-        { \
-            [dump appendFormat:samplePrintFormat, dataBuffer[j + i * channelCount]]; \
-        } \
-        [dump appendFormat:@"\n"]; \
-    } \
-    LoggerAudio(3, @"%@", dump); \
-}
-
-#define dumpAudioSamplesNonInterleaved(prefix, dataBuffer, samplePrintFormat, sampleCount, channelCount) \
-{ \
-    NSMutableString *dump = [NSMutableString stringWithFormat:prefix]; \
-    for (int i = 0; i < MIN(MAX_SAMPLE_DUMPED, sampleCount); i++) \
-    { \
-        for (int j = 0; j < channelCount; j++) \
-        { \
-            [dump appendFormat:samplePrintFormat, dataBuffer[j][i]]; \
-        } \
-        [dump appendFormat:@"\n"]; \
-    } \
-    LoggerAudio(3, @"%@", dump); \
-}
 
 - (BOOL) checkAudioRoute
 {
@@ -179,7 +150,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
     // A small number will get you lower latency audio, but will make your processor work harder
     
 #if !TARGET_IPHONE_SIMULATOR
-    Float32 preferredBufferSize = 0.232;
+    Float32 preferredBufferSize = 4096;
     if (checkError(AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration,
                                             sizeof(preferredBufferSize),
                                             &preferredBufferSize),

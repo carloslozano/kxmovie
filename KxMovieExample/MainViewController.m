@@ -243,7 +243,7 @@
     
     // disable buffering
     parameters[KxMovieParameterMinBufferedDuration] = @(2.0f);
-    parameters[KxMovieParameterMaxBufferedDuration] = @(4.0f);
+    parameters[KxMovieParameterMaxBufferedDuration] = @(3.0f);
     
     KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path
                                                                                parameters:parameters];
