@@ -1722,7 +1722,7 @@ static void FFLog(void* context, int level, const char* format, va_list args) {
                 printf("4 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
                 break;
             default:
-                printf("5 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
+                //printf("5 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
                 break;
         }
     }

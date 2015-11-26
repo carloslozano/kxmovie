@@ -12,16 +12,12 @@
 		4EFB4B751C05B64000ED147E /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B691C05B64000ED147E /* libavfilter.a */; };
 		4EFB4B761C05B64000ED147E /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6A1C05B64000ED147E /* libavformat.a */; };
 		4EFB4B771C05B64000ED147E /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6B1C05B64000ED147E /* libavutil.a */; };
-		4EFB4B781C05B64000ED147E /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6C1C05B64000ED147E /* libcrypto.a */; };
-		4EFB4B791C05B64000ED147E /* libfdk-aac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6D1C05B64000ED147E /* libfdk-aac.a */; };
-		4EFB4B7A1C05B64000ED147E /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6E1C05B64000ED147E /* libpostproc.a */; };
-		4EFB4B7B1C05B64000ED147E /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6F1C05B64000ED147E /* libssl.a */; };
 		4EFB4B7C1C05B64000ED147E /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B701C05B64000ED147E /* libswresample.a */; };
 		4EFB4B7D1C05B64000ED147E /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B711C05B64000ED147E /* libswscale.a */; };
-		4EFB4B7E1C05B64000ED147E /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B721C05B64000ED147E /* libvpx.a */; };
-		4EFB4B7F1C05B64000ED147E /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B731C05B64000ED147E /* libx264.a */; };
 		4EFB4B811C05B65400ED147E /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B801C05B65400ED147E /* libbz2.tbd */; };
 		4EFB4B831C05BC8C00ED147E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B821C05BC8C00ED147E /* AVFoundation.framework */; };
+		4EFB4BBC1C0711AD00ED147E /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6C1C05B64000ED147E /* libcrypto.a */; };
+		4EFB4BBD1C0711AD00ED147E /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6F1C05B64000ED147E /* libssl.a */; };
 		7B5F24851B78B1AB00252438 /* FNRTSPViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7B5F24831B78B19D00252438 /* FNRTSPViewController.h */; };
 		7BC0518A1B6B60F700B7F793 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051831B6B60F700B7F793 /* libavcodec.a */; };
 		7BC0518B1B6B60F700B7F793 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051841B6B60F700B7F793 /* libavdevice.a */; };
@@ -100,6 +96,8 @@
 		4EFB4B731C05B64000ED147E /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libx264.a; path = FFmpeg/lib/libx264.a; sourceTree = "<group>"; };
 		4EFB4B801C05B65400ED147E /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
 		4EFB4B821C05BC8C00ED147E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		4EFB4BB81C06FFB600ED147E /* libcorecrypto.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcorecrypto.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/usr/lib/system/libcorecrypto.tbd; sourceTree = DEVELOPER_DIR; };
+		4EFB4BBA1C0700CC00ED147E /* libSystem.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/usr/lib/libSystem.tbd; sourceTree = DEVELOPER_DIR; };
 		7B224A121B62152A00F5B306 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = "FFmpeg-iOS/lib/libavcodec.a"; sourceTree = "<group>"; };
 		7B224A131B62152A00F5B306 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = "FFmpeg-iOS/lib/libavdevice.a"; sourceTree = "<group>"; };
 		7B224A141B62152A00F5B306 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = "FFmpeg-iOS/lib/libavfilter.a"; sourceTree = "<group>"; };
@@ -161,18 +159,14 @@
 			files = (
 				4EFB4B831C05BC8C00ED147E /* AVFoundation.framework in Frameworks */,
 				4EFB4B811C05B65400ED147E /* libbz2.tbd in Frameworks */,
+				4EFB4BBC1C0711AD00ED147E /* libcrypto.a in Frameworks */,
+				4EFB4BBD1C0711AD00ED147E /* libssl.a in Frameworks */,
 				4EFB4B741C05B64000ED147E /* libavcodec.a in Frameworks */,
 				4EFB4B751C05B64000ED147E /* libavfilter.a in Frameworks */,
 				4EFB4B761C05B64000ED147E /* libavformat.a in Frameworks */,
 				4EFB4B771C05B64000ED147E /* libavutil.a in Frameworks */,
-				4EFB4B781C05B64000ED147E /* libcrypto.a in Frameworks */,
-				4EFB4B791C05B64000ED147E /* libfdk-aac.a in Frameworks */,
-				4EFB4B7A1C05B64000ED147E /* libpostproc.a in Frameworks */,
-				4EFB4B7B1C05B64000ED147E /* libssl.a in Frameworks */,
 				4EFB4B7C1C05B64000ED147E /* libswresample.a in Frameworks */,
 				4EFB4B7D1C05B64000ED147E /* libswscale.a in Frameworks */,
-				4EFB4B7E1C05B64000ED147E /* libvpx.a in Frameworks */,
-				4EFB4B7F1C05B64000ED147E /* libx264.a in Frameworks */,
 				8704657C16F6ECA000D4083E /* libiconv.dylib in Frameworks */,
 				87E7945116391BC1000A0848 /* libz.dylib in Frameworks */,
 				87E793FD16390F6D000A0848 /* UIKit.framework in Frameworks */,
@@ -229,6 +223,8 @@
 		87E793FB16390F6D000A0848 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4EFB4BBA1C0700CC00ED147E /* libSystem.tbd */,
+				4EFB4BB81C06FFB600ED147E /* libcorecrypto.tbd */,
 				4EFB4B821C05BC8C00ED147E /* AVFoundation.framework */,
 				4EFB4B801C05B65400ED147E /* libbz2.tbd */,
 				4EFB4B681C05B64000ED147E /* libavcodec.a */,
@@ -529,6 +525,7 @@
 					"$(SRCROOT)/FFmpeg/lib",
 					"$(inherited)",
 					"$(PROJECT_DIR)/FFmpeg/lib",
+					"$(SDKROOT)/usr/lib/system",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.kolyvan.${PRODUCT_NAME:rfc1034identifier}";
@@ -574,6 +571,7 @@
 					"$(SRCROOT)/FFmpeg/lib",
 					"$(inherited)",
 					"$(PROJECT_DIR)/FFmpeg/lib",
+					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.kolyvan.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
