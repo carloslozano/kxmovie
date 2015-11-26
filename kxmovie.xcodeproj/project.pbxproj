@@ -8,19 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		4E4E3F871C0624DB000CEFA0 /* SampleMovies in Resources */ = {isa = PBXBuildFile; fileRef = 4E4E3F861C0624DB000CEFA0 /* SampleMovies */; };
-		4EFB4B741C05B64000ED147E /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B681C05B64000ED147E /* libavcodec.a */; };
-		4EFB4B751C05B64000ED147E /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B691C05B64000ED147E /* libavfilter.a */; };
-		4EFB4B761C05B64000ED147E /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6A1C05B64000ED147E /* libavformat.a */; };
-		4EFB4B771C05B64000ED147E /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6B1C05B64000ED147E /* libavutil.a */; };
-		4EFB4B7C1C05B64000ED147E /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B701C05B64000ED147E /* libswresample.a */; };
-		4EFB4B7D1C05B64000ED147E /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B711C05B64000ED147E /* libswscale.a */; };
+		4E9474EF1C075676009582FC /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B681C05B64000ED147E /* libavcodec.a */; };
+		4E9474F01C075676009582FC /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B691C05B64000ED147E /* libavfilter.a */; };
+		4E9474F11C075676009582FC /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6A1C05B64000ED147E /* libavformat.a */; };
+		4E9474F21C075676009582FC /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6B1C05B64000ED147E /* libavutil.a */; };
+		4E9474F31C075676009582FC /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6C1C05B64000ED147E /* libcrypto.a */; };
+		4E9474F41C075676009582FC /* libfdk-aac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6D1C05B64000ED147E /* libfdk-aac.a */; };
+		4E9474F51C075676009582FC /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6E1C05B64000ED147E /* libpostproc.a */; };
+		4E9474F61C075676009582FC /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6F1C05B64000ED147E /* libssl.a */; };
+		4E9474F71C075676009582FC /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B701C05B64000ED147E /* libswresample.a */; };
+		4E9474F81C075676009582FC /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B711C05B64000ED147E /* libswscale.a */; };
+		4E9474F91C075676009582FC /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B721C05B64000ED147E /* libvpx.a */; };
+		4E9474FA1C075676009582FC /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B731C05B64000ED147E /* libx264.a */; };
 		4EFB4B811C05B65400ED147E /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B801C05B65400ED147E /* libbz2.tbd */; };
 		4EFB4B831C05BC8C00ED147E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B821C05BC8C00ED147E /* AVFoundation.framework */; };
-		4EFB4BBC1C0711AD00ED147E /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6C1C05B64000ED147E /* libcrypto.a */; };
-		4EFB4BBD1C0711AD00ED147E /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFB4B6F1C05B64000ED147E /* libssl.a */; };
 		7B5F24851B78B1AB00252438 /* FNRTSPViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7B5F24831B78B19D00252438 /* FNRTSPViewController.h */; };
 		7BC0518A1B6B60F700B7F793 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051831B6B60F700B7F793 /* libavcodec.a */; };
-		7BC0518B1B6B60F700B7F793 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051841B6B60F700B7F793 /* libavdevice.a */; };
 		7BC0518C1B6B60F700B7F793 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051851B6B60F700B7F793 /* libavfilter.a */; };
 		7BC0518D1B6B60F700B7F793 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051861B6B60F700B7F793 /* libavformat.a */; };
 		7BC0518E1B6B60F700B7F793 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC051871B6B60F700B7F793 /* libavutil.a */; };
@@ -157,16 +160,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E9474EF1C075676009582FC /* libavcodec.a in Frameworks */,
+				4E9474F01C075676009582FC /* libavfilter.a in Frameworks */,
+				4E9474F11C075676009582FC /* libavformat.a in Frameworks */,
+				4E9474F21C075676009582FC /* libavutil.a in Frameworks */,
+				4E9474F31C075676009582FC /* libcrypto.a in Frameworks */,
+				4E9474F41C075676009582FC /* libfdk-aac.a in Frameworks */,
+				4E9474F51C075676009582FC /* libpostproc.a in Frameworks */,
+				4E9474F61C075676009582FC /* libssl.a in Frameworks */,
+				4E9474F71C075676009582FC /* libswresample.a in Frameworks */,
+				4E9474F81C075676009582FC /* libswscale.a in Frameworks */,
+				4E9474F91C075676009582FC /* libvpx.a in Frameworks */,
+				4E9474FA1C075676009582FC /* libx264.a in Frameworks */,
 				4EFB4B831C05BC8C00ED147E /* AVFoundation.framework in Frameworks */,
 				4EFB4B811C05B65400ED147E /* libbz2.tbd in Frameworks */,
-				4EFB4BBC1C0711AD00ED147E /* libcrypto.a in Frameworks */,
-				4EFB4BBD1C0711AD00ED147E /* libssl.a in Frameworks */,
-				4EFB4B741C05B64000ED147E /* libavcodec.a in Frameworks */,
-				4EFB4B751C05B64000ED147E /* libavfilter.a in Frameworks */,
-				4EFB4B761C05B64000ED147E /* libavformat.a in Frameworks */,
-				4EFB4B771C05B64000ED147E /* libavutil.a in Frameworks */,
-				4EFB4B7C1C05B64000ED147E /* libswresample.a in Frameworks */,
-				4EFB4B7D1C05B64000ED147E /* libswscale.a in Frameworks */,
 				8704657C16F6ECA000D4083E /* libiconv.dylib in Frameworks */,
 				87E7945116391BC1000A0848 /* libz.dylib in Frameworks */,
 				87E793FD16390F6D000A0848 /* UIKit.framework in Frameworks */,
@@ -187,7 +194,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BC0518A1B6B60F700B7F793 /* libavcodec.a in Frameworks */,
-				7BC0518B1B6B60F700B7F793 /* libavdevice.a in Frameworks */,
 				7BC0518C1B6B60F700B7F793 /* libavfilter.a in Frameworks */,
 				7BC0518D1B6B60F700B7F793 /* libavformat.a in Frameworks */,
 				7BC0518E1B6B60F700B7F793 /* libavutil.a in Frameworks */,
@@ -586,7 +592,6 @@
 		87FD617E163A75440090956E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -623,12 +628,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../FFmpeg-iOS/include",
+					"$(PROJECT_DIR)/FFmpeg/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../FFmpeg-iOS/lib",
+					"$(PROJECT_DIR)/FFmpeg/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -642,7 +647,6 @@
 		87FD617F163A75440090956E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -673,12 +677,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../FFmpeg-iOS/include",
+					"$(PROJECT_DIR)/FFmpeg/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../FFmpeg-iOS/lib",
+					"$(PROJECT_DIR)/FFmpeg/lib",
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
