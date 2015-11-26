@@ -75,13 +75,13 @@
     [super viewDidLoad];
 
 #ifdef DEBUG_AUTOPLAY
-    [self performSelector:@selector(launchDebugTest) withObject:nil afterDelay:0.5];
+    //[self performSelector:@selector(launchDebugTest) withObject:nil afterDelay:0.5];
 #endif
 }
 
 - (void)launchDebugTest
 {
-    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:19 inSection:0]];
 }
 
 - (void)didReceiveMemoryWarning

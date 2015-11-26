@@ -1192,8 +1192,8 @@ static NSMutableDictionary * gHistory;
     } else if (_decoder.validAudio) {
         if (self.artworkFrame) {
             
-            _imageView.image = [self.artworkFrame asImage];
-            self.artworkFrame = nil;
+            //_imageView.image = [self.artworkFrame asImage];
+            //self.artworkFrame = nil;
         }
     }
 

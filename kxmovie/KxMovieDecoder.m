@@ -14,7 +14,7 @@
 #import "KxAudioManager.h"
 #import "KxLogger.h"
 
-#define kDefaultTimeout 3
+#define kDefaultTimeout 300
 
 ////////////////////////////////////////////////////////////////////////////////
 NSString * kxmovieErrorDomain = @"ru.kolyvan.kxmovie";
@@ -788,34 +788,43 @@ static int interrupt_callback(void *ctx);
 {
     AVFormatContext *formatCtx = NULL;
     
+    AVIOInterruptCB cb = {interrupt_callback, (__bridge void *)(self)};
+    AVIOContext *ioCtx = NULL;
+    
     if (_interruptCallback) {
         
         formatCtx = avformat_alloc_context();
         if (!formatCtx)
             return kxMovieErrorOpenFile;
-//        formatCtx->bit_rate = 1000 * 1024;
-//        formatCtx->max_delay = 3000000;// 3 sec ,單位為微秒
-//        formatCtx->duration = 3000000;
-//        formatCtx->fps_probe_size = 3;
-//        formatCtx -> max_picture_buffer = 440 * 240 * 3 * 24;
-//        //  flag = TRUE;
-//        formatCtx->max_analyze_duration2 = 0;
-//        // ic->probesize2 = 2048;
-//        formatCtx->max_chunk_size = 440 * 240;
 
-        AVIOInterruptCB cb = {interrupt_callback, (__bridge void *)(self)};
+        formatCtx->format_probesize =200000;
+        formatCtx->probesize = 10;
+        formatCtx->max_ts_probe = 100;
+        formatCtx->max_index_size = 1024*1014;
+        
+        formatCtx->flags |= AVFMT_FLAG_NOBUFFER;
+        formatCtx->flags |= AVFMT_FLAG_IGNDTS;
+        
+        
         formatCtx->interrupt_callback = cb;
     }
     
-    if (avformat_open_input(&formatCtx, [path cStringUsingEncoding: NSUTF8StringEncoding], NULL, NULL) < 0) {
+    
+
+    AVDictionary * options = NULL;
+
+    av_dict_set(&options, "probesize", "32", 0);
+    av_dict_set(&options, "max_analyze_duration", "32", 0);
+    av_dict_set(&options, "threads", "4", 0);
+
+
+    
+    if (avformat_open_input(&formatCtx, [path cStringUsingEncoding: NSUTF8StringEncoding], NULL, &options) < 0) {
         
         if (formatCtx)
             avformat_free_context(formatCtx);
         return kxMovieErrorOpenFile;
     }
-
-    
-//    formatCtx->flags |= AVFMT_FLAG_IGNDTS;
 
     if (avformat_find_stream_info(formatCtx, NULL) < 0) {
         
@@ -866,8 +875,8 @@ static int interrupt_callback(void *ctx);
     
     // inform the codec that we can handle truncated bitstreams -- i.e.,
     // bitstreams where frame boundaries can fall in the middle of packets
-    //if(codec->capabilities & CODEC_CAP_TRUNCATED)
-    //    _codecCtx->flags |= CODEC_FLAG_TRUNCATED;
+    if(codec->capabilities & CODEC_CAP_TRUNCATED)
+        codecCtx->flags |= CODEC_FLAG_TRUNCATED;
     
     // open codec
     if (avcodec_open2(codecCtx, codec, NULL) < 0)
@@ -1697,18 +1706,22 @@ static void FFLog(void* context, int level, const char* format, va_list args) {
         NSString* message = [[NSString alloc] initWithFormat: [NSString stringWithUTF8String: format] arguments: args];
         switch (level) {
             case 0:
+                printf("0 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
+                break;
             case 1:
-                LoggerStream(0, @"%@", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]]);
+                printf("1 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
                 break;
             case 2:
-                LoggerStream(1, @"%@", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]]);
+                printf("2 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
                 break;
             case 3:
+                printf("3 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
+                break;
             case 4:
-                LoggerStream(2, @"%@", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]]);
+                printf("4 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
                 break;
             default:
-                LoggerStream(3, @"%@", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]]);
+                printf("5 %s\n", [message stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]].UTF8String);
                 break;
         }
     }
