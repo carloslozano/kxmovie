@@ -67,8 +67,8 @@ static NSMutableDictionary * gHistory;
 
 #define LOCAL_MIN_BUFFERED_DURATION   0.2
 #define LOCAL_MAX_BUFFERED_DURATION   0.4
-#define NETWORK_MIN_BUFFERED_DURATION 2.0
-#define NETWORK_MAX_BUFFERED_DURATION 4.0
+#define NETWORK_MIN_BUFFERED_DURATION 4.0
+#define NETWORK_MAX_BUFFERED_DURATION 8.0
 
 @interface KxMovieViewController () {
 
@@ -255,11 +255,11 @@ static NSMutableDictionary * gHistory;
 
     _topHUD    = [[UIView alloc] initWithFrame:CGRectMake(0,0,0,0)];
     _topBar    = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, width, topH)];
-    _topBar.translucent = TRUE;
+    _topBar.alpha = 0.5;
     _topBar.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
     _bottomBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, height-botH, width, botH)];
     _bottomBar.tintColor = [UIColor blackColor];
-
+    _bottomBar.alpha = 0.5;
     _topHUD.frame = CGRectMake(0,0,width,_topBar.frame.size.height);
 
     _topHUD.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -1386,7 +1386,7 @@ static NSMutableDictionary * gHistory;
                         options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionTransitionNone
                      animations:^{
                          
-                         CGFloat alpha = _hiddenHUD ? 0 : 1;
+                         CGFloat alpha = _hiddenHUD ? 0 : 0.5;
                          _topBar.alpha = alpha;
                          _topHUD.alpha = alpha;
                          _bottomBar.alpha = alpha;

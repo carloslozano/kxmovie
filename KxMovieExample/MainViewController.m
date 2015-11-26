@@ -34,6 +34,9 @@
                           @"https://download.blender.org/durian/movies/Sintel.2010.720p.mkv",
                           @"https://download.blender.org/durian/movies/Sintel.2010.4k.mkv",
                           @"https://download.blender.org/durian/movies/sintel_4k.mov",
+                          @"http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4",
+                          @"https://archive.org/download/DivXSharkstaletrailerhighDefDivxTest/SharkTaleHD.divx",
+                          @"https://archive.org/download/DivXSharkstaletrailerhighDefDivxTest/SharkTaleHD_512kb.mp4",
                           @"http://192.168.1.36:1497/%/5CC8D1120A798069DD06B438CCBED2BF/TV%20On%20The%20Radio%20-%20Happy%20Idiot%20(Official)-OaKVy-FlaUA.mp4",
                           @"http://192.168.1.36:1497/%/B1C09CAF965C20791DE8C3B866173DCA/bbb_sunflower_1080p_30fps_normal.mp4",
                           @"http://192.168.1.36:1497/%/3B96A729C8DA7C07EDD07D14B5F35ADE/bbb_sunflower_1080p_60fps_normal.mp4",
@@ -239,8 +242,8 @@
         parameters[KxMovieParameterDisableDeinterlacing] = @(YES);
     
     // disable buffering
-    parameters[KxMovieParameterMinBufferedDuration] = @(1.0f);
-    parameters[KxMovieParameterMaxBufferedDuration] = @(2.0f);
+    parameters[KxMovieParameterMinBufferedDuration] = @(4.0f);
+    parameters[KxMovieParameterMaxBufferedDuration] = @(8.0f);
     
     KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path
                                                                                parameters:parameters];

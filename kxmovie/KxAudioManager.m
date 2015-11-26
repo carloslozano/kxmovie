@@ -179,7 +179,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
     // A small number will get you lower latency audio, but will make your processor work harder
     
 #if !TARGET_IPHONE_SIMULATOR
-    Float32 preferredBufferSize = 0.0232;
+    Float32 preferredBufferSize = 0.232;
     if (checkError(AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration,
                                             sizeof(preferredBufferSize),
                                             &preferredBufferSize),
