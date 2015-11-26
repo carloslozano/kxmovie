@@ -208,6 +208,9 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
     KxVideoFrameRGB *rgbFrame = (KxVideoFrameRGB *)frame;
 
     assert(rgbFrame.rgb.length == rgbFrame.width * rgbFrame.height * 3);
+    if (rgbFrame.rgb.length != rgbFrame.width * rgbFrame.height * 3) {
+        return;
+    }
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
@@ -287,6 +290,11 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
     assert(yuvFrame.luma.length == yuvFrame.width * yuvFrame.height);
     assert(yuvFrame.chromaB.length == (yuvFrame.width * yuvFrame.height) / 4);
     assert(yuvFrame.chromaR.length == (yuvFrame.width * yuvFrame.height) / 4);
+    if (yuvFrame.luma.length != yuvFrame.width * yuvFrame.height
+        || yuvFrame.chromaB.length != (yuvFrame.width * yuvFrame.height) / 4
+        || yuvFrame.chromaR.length != (yuvFrame.width * yuvFrame.height) / 4) {
+        return;
+    }
 
     const NSUInteger frameWidth = frame.width;
     const NSUInteger frameHeight = frame.height;    
