@@ -446,6 +446,7 @@ enum {
                                         [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
                                         kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
                                         nil];
+        eaglLayer.contentsScale = 2;
         
         _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
         
@@ -457,11 +458,9 @@ enum {
             return nil;
         }
         
-        glEnable(GL_TEXTURE_2D);
-        glEnable(GL_TEXTURE);
-        glEnable(GL_TEXTURE0);
+        //glEnable(GL_TEXTURE_2D);
         
-        glDisable(GL_DITHER);
+        //glDisable(GL_DITHER);
         
         glGenRenderbuffers(1, &_renderbuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
