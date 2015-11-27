@@ -15,7 +15,7 @@
 #import "KxMovieDecoder.h"
 #import "KxAudioManager.h"
 #import "KxMovieGLView.h"
-#import "KxLogger.h"
+
 
 NSString * const KxMovieParameterMinBufferedDuration = @"KxMovieParameterMinBufferedDuration";
 NSString * const KxMovieParameterMaxBufferedDuration = @"KxMovieParameterMaxBufferedDuration";
@@ -217,7 +217,7 @@ static NSMutableDictionary * gHistory;
         _dispatchQueue = NULL;
     }
     
-    LoggerStream(1, @"%@ dealloc", self);
+    //LoggerStream(1, @"%@ dealloc", self);
 }
 
 - (void)loadView
@@ -386,7 +386,7 @@ static NSMutableDictionary * gHistory;
             _minBufferedDuration = _maxBufferedDuration = 0;
             [self play];
             
-            LoggerStream(0, @"didReceiveMemoryWarning, disable buffering and continue playing");
+            //LoggerStream(0, @"didReceiveMemoryWarning, disable buffering and continue playing");
             
         } else {
             
@@ -468,7 +468,7 @@ static NSMutableDictionary * gHistory;
     _buffered = NO;
     _interrupted = YES;
     
-    LoggerStream(1, @"viewWillDisappear %@", self);
+    //LoggerStream(1, @"viewWillDisappear %@", self);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -481,7 +481,7 @@ static NSMutableDictionary * gHistory;
     [self showHUD:YES];
     [self pause];
     
-    LoggerStream(1, @"applicationWillResignActive");
+    //LoggerStream(1, @"applicationWillResignActive");
 }
 
 #pragma mark - gesture recognizer
@@ -556,14 +556,14 @@ static NSMutableDictionary * gHistory;
     [self asyncDecodeFrames];
     [self updatePlayButton];
 
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.250 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self tick];
     });
 
     if (_decoder.validAudio)
         [self enableAudio:YES];
-    LoggerStream(1, @"play movie");
+    //LoggerStream(1, @"play movie");
 }
 
 - (void) resume {
@@ -581,7 +581,7 @@ static NSMutableDictionary * gHistory;
     //_interrupted = YES;
     [self enableAudio:NO];
     [self updatePlayButton];
-    LoggerStream(1, @"pause movie");
+    //LoggerStream(1, @"pause movie");
 }
 
 - (void) stop {
@@ -658,7 +658,7 @@ static NSMutableDictionary * gHistory;
 - (void) setMovieDecoder: (KxMovieDecoder *) decoder
                withError: (NSError *) error
 {
-    LoggerStream(2, @"setMovieDecoder");
+    //LoggerStream(2, @"setMovieDecoder");
             
     if (!error && decoder) {
         
@@ -707,8 +707,8 @@ static NSMutableDictionary * gHistory;
             if (_maxBufferedDuration < _minBufferedDuration)
                 _maxBufferedDuration = _minBufferedDuration * 2;
         }
-        NSLog(@"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
-        LoggerStream(2, @"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
+        //NSLog(@"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
+        //LoggerStream(2, @"buffered limit: %.1f - %.1f", _minBufferedDuration, _maxBufferedDuration);
         
         if (self.isViewLoaded) {
             
@@ -756,7 +756,7 @@ static NSMutableDictionary * gHistory;
     } 
     
     if (!_glView) {
-        LoggerVideo(0, @"fallback to use RGB video frame and UIKit");
+        //LoggerVideo(0, @"fallback to use RGB video frame and UIKit");
         [_decoder setupVideoFrameFormat:KxVideoFrameFormatRGB];
         _imageView = [[UIImageView alloc] initWithFrame:bounds];
         _imageView.backgroundColor = [UIColor blackColor];
@@ -878,7 +878,7 @@ static NSMutableDictionary * gHistory;
                         KxAudioFrame *frame = _audioFrames[0];
 
 #ifdef DUMP_AUDIO_DATA
-                        LoggerAudio(2, @"Audio frame position: %f", frame.position);
+                        //LoggerAudio(2, @"Audio frame position: %f", frame.position);
 #endif
                         if (_decoder.validVideo) {
                         
@@ -888,7 +888,7 @@ static NSMutableDictionary * gHistory;
                                 
                                 memset(outData, 0, numFrames * numChannels * sizeof(float));
 #ifdef DEBUG
-                                LoggerStream(0, @"desync audio (outrun) wait %.4f %.4f", _moviePosition, frame.position);
+                                //LoggerStream(0, @"desync audio (outrun) wait %.4f %.4f", _moviePosition, frame.position);
                                 _debugAudioStatus = 1;
                                 _debugAudioStatusTS = [NSDate date];
 #endif
@@ -900,7 +900,7 @@ static NSMutableDictionary * gHistory;
                             if (delta > 0.1 && count > 1) {
                                 
 #ifdef DEBUG
-                                LoggerStream(0, @"desync audio (lags) skip %.4f %.4f", _moviePosition, frame.position);
+                                //LoggerStream(0, @"desync audio (lags) skip %.4f %.4f", _moviePosition, frame.position);
                                 _debugAudioStatus = 2;
                                 _debugAudioStatusTS = [NSDate date];
 #endif
@@ -928,7 +928,7 @@ static NSMutableDictionary * gHistory;
                 const NSUInteger bytesToCopy = MIN(numFrames * frameSizeOf, bytesLeft);
                 const NSUInteger framesToCopy = bytesToCopy / frameSizeOf;
                 
-                memcpy(outData, bytes, bytesToCopy);
+                memmove(outData, bytes, bytesToCopy);
                 numFrames -= framesToCopy;
                 outData += framesToCopy * numChannels;
                 
@@ -964,11 +964,12 @@ static NSMutableDictionary * gHistory;
         
         [audioManager play];
         
+        /*
         LoggerAudio(2, @"audio device smr: %d fmt: %d chn: %d",
                     (int)audioManager.samplingRate,
                     (int)audioManager.numBytesPerSample,
                     (int)audioManager.numOutputChannels);
-        
+        */
     } else {
         
         [audioManager pause];
@@ -1050,7 +1051,7 @@ static NSMutableDictionary * gHistory;
     __weak KxMovieViewController *weakSelf = self;
     __weak KxMovieDecoder *weakDecoder = _decoder;
     
-    const CGFloat duration = _decoder.isNetwork ? 0.1f : 0.1f;
+    const CGFloat duration = _decoder.isNetwork ? 1.0f : 1.0f;
     
     self.decoding = YES;
     dispatch_async(_dispatchQueue, ^{
@@ -1160,7 +1161,7 @@ static NSMutableDictionary * gHistory;
     
     if (correction > 1.f || correction < -1.f) {
         
-        LoggerStream(1, @"tick correction reset %.2f", correction);
+        //LoggerStream(1, @"tick correction reset %.2f", correction);
         correction = 0;
         _tickCorrectionTime = 0;
     }
@@ -1361,8 +1362,8 @@ static NSMutableDictionary * gHistory;
     else if (_debugAudioStatus == 3) audioStatus = @"\n(audio silence)";
     else audioStatus = @"";
 
-    _messageLabel.text = [NSString stringWithFormat:@"%d %lu%@ %c - %@ %@ %@\n%@",
-                          _videoFrames.count,
+    _messageLabel.text = [NSString stringWithFormat:@"%lu %lu%@ %c - %@ %@ %@\n%@",
+                          (unsigned long) _videoFrames.count,
                           (unsigned long)_audioFrames.count,
                           subinfo,
                           self.decoding ? 'D' : ' ',
@@ -1380,6 +1381,8 @@ static NSMutableDictionary * gHistory;
     _panGestureRecognizer.enabled = _hiddenHUD;
         
     [[UIApplication sharedApplication] setIdleTimerDisabled:_hiddenHUD];
+    
+    printf("%i\n", _hiddenHUD);
     
     [UIView animateWithDuration:0.2
                           delay:0.0

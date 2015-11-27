@@ -84,7 +84,7 @@
 
 - (void)launchDebugTest
 {
-    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:7 inSection:1]];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -243,7 +243,7 @@
     
     // disable buffering
     parameters[KxMovieParameterMinBufferedDuration] = @(2.0f);
-    parameters[KxMovieParameterMaxBufferedDuration] = @(3.0f);
+    parameters[KxMovieParameterMaxBufferedDuration] = @(2.0f);
     
     KxMovieViewController *vc = [KxMovieViewController movieViewControllerWithContentPath:path
                                                                                parameters:parameters];
